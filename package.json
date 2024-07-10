@@ -12,7 +12,11 @@
     "lint": "pnpm eslint --cache .",
     "prepare": "husky",
     "sort-package-json": "npx sort-package-json package.json 'packages/*/package.json'",
-    "test": "pnpm -filter server test"
+    "test": "pnpm -r test",
+    "test:watch": "pnpm -r test:watch",
+    "test:server": "pnpm -filter server test",
+    "test:server:watch": "pnpm -filter server test:watch",
+    "test:server:ui": "pnpm -filter server test:ui"
   },
   "lint-staged": {
     "*.{ts,tsx}": "pnpm lint",
