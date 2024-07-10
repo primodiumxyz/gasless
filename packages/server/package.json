@@ -5,8 +5,10 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "test": "node --test test/**/*.test.js"
+    "dev": "NODE_ENV=development tsx watch src/index.ts",
+    "test": "NODE_ENV=test vitest",
+    "test:ui": "NODE_ENV=test vitest --ui",
+    "start": "NODE_ENV=production tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
-    "tsx": "^4.16.2"
+    "@types/supertest": "^6.0.2",
+    "@vitest/ui": "^2.0.1",
+    "supertest": "^7.0.0",
+    "tsx": "^4.16.2",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^2.0.1"
   }
 }

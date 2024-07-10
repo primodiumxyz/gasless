@@ -5,13 +5,14 @@ import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 import { Hex } from "viem";
 
+import { TEST } from "@/utils/constants";
+
 declare module "fastify" {
   interface FastifyInstance {
     config: {
-      // this should be same as the confKey in options
-      // specify your typing here
       PORT: number;
       PRIVATE_KEY: Hex;
+      NODE_ENV: "development" | "production" | "test";
     };
   }
 }
@@ -24,7 +25,14 @@ const schema = {
       type: "number",
       default: 3000,
     },
+    NODE_ENV: {
+      type: "string",
+      default: "development",
+    },
     PRIVATE_KEY: {
+      type: "string",
+    },
+    TEST_VAR: {
       type: "string",
     },
   },
@@ -34,13 +42,13 @@ export default fp(async function (fastify: FastifyInstance) {
   fastify
     .register(fastifyEnv, {
       schema,
-      dotenv: true,
+      dotenv: !TEST ? true : false,
+      data: process.env,
     })
     .ready((err) => {
       if (err) {
-        console.log(err);
-        process.exit(1);
+        fastify.log.error(err);
       }
-      fastify.log.info("env vars loaded");
+      fastify.log.info("Environment variables loaded successfully.");
     });
 });

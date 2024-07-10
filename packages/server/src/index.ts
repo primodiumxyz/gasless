@@ -1,35 +1,26 @@
 "use strict";
 
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
-import autoLoad from "@fastify/autoload";
-import fastify from "fastify";
+import { start } from "@/app";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const { dispose } = await start();
 
-export const app = fastify({
-  logger: {
-    level: "info",
-    stream: process.stdout,
-  },
+// Handle process close events
+process.on("SIGINT", () => {
+  console.log("SIGINT signal received: closing HTTP server");
+  dispose()
+    .then(() => process.exit(0))
+    .catch((error) => {
+      console.error("Failed to close the server gracefully:", error);
+      process.exit(1);
+    });
 });
 
-// register plugins
-await app.register(autoLoad, {
-  dir: join(__dirname, "plugins"),
-});
-
-// register routes
-await app.register(autoLoad, {
-  dir: join(__dirname, "routes"),
-});
-
-app.listen({ port: app.config.PORT }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-
-  console.log(`Server listening at ${address}`);
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal received: closing HTTP server");
+  dispose()
+    .then(() => process.exit(0))
+    .catch((error) => {
+      console.error("Failed to close the server gracefully:", error);
+      process.exit(1);
+    });
 });
