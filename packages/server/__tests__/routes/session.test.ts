@@ -2,9 +2,8 @@ import supertest from "supertest";
 import TestAgent from "supertest/lib/agent";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 
-
-import { loginUser, logoutUser } from "@tests/lib/session";
 import { start } from "@/app";
+import { loginUser, logoutUser } from "@tests/lib/session";
 
 let agent: TestAgent;
 let app: Awaited<ReturnType<typeof start>>;
