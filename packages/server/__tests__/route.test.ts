@@ -8,7 +8,7 @@ beforeAll(async () => {
   app = await start();
 });
 
-describe("routes", async () => {
+describe("test routes", async () => {
   it("GET / route", async () => {
     const { fastify } = app;
     const response = await supertest(fastify.server).get("/").expect(200);

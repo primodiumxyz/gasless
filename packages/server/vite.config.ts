@@ -7,6 +7,7 @@ export default defineConfig({
     include: ["./__tests__/**/*.test.ts"],
     forceRerunTriggers: ["**/*.ts"],
     silent: false,
+    reporters: ["verbose"],
     // env to test
     env: {
       NODE_ENV: "test",

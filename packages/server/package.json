@@ -2,17 +2,18 @@
   "name": "server",
   "version": "1.0.0",
   "description": "This project was bootstrapped with Fastify-CLI.",
-  "main": "index.ts",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
   "type": "module",
+  "main": "index.ts",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch src/index.ts",
-    "test": "NODE_ENV=test vitest",
+    "start": "NODE_ENV=production tsx src/index.ts",
+    "test": "NODE_ENV=test vitest run",
     "test:ui": "NODE_ENV=test vitest --ui",
-    "start": "NODE_ENV=production tsx src/index.ts"
+    "test:watch": "NODE_ENV=test vitest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
     "@fastify/env": "^4.4.0",
