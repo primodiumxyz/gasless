@@ -31,11 +31,13 @@ export async function build() {
   // register plugins
   await app.register(autoLoad, {
     dir: join(__dirname, "plugins"),
+    forceESM: true,
   });
 
   // register routes
   await app.register(autoLoad, {
     dir: join(__dirname, "routes"),
+    forceESM: true,
   });
 
   return app;

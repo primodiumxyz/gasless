@@ -8,12 +8,6 @@ export default defineConfig({
     forceRerunTriggers: ["**/*.ts"],
     silent: false,
     reporters: ["verbose"],
-    // env to test
-    env: {
-      NODE_ENV: "test",
-      PORT: "3000",
-      PRIVATE_KEY: "0x123",
-    },
     server: {
       deps: {
         inline: ["@fastify/autoload"],

@@ -5,6 +5,7 @@
     "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@tests/*": ["./__tests__/*"],
     },
   },
   "exclude": ["node_modules"],

@@ -1,11 +1,19 @@
-'use strict'
+"use strict";
 
-import fp from 'fastify-plugin';
-import plugin from '@fastify/sensible';
+import { fastifySensible } from "@fastify/sensible";
+import { FastifyInstance } from "fastify";
+import fp from "fastify-plugin";
 
 /**
  * This plugins adds some utilities to handle http errors
  *
  * @see https://github.com/fastify/fastify-sensible
  */
-export default fp(plugin);
+export default fp(async function (fastify: FastifyInstance) {
+  fastify.register(fastifySensible).ready((err) => {
+    if (err) {
+      fastify.log.error(err);
+    }
+    fastify.log.info("Sensible plugin loaded successfully.");
+  });
+});

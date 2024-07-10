@@ -5,21 +5,20 @@ import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 import { Hex } from "viem";
 
-import { TEST } from "@/utils/constants";
-
 declare module "fastify" {
   interface FastifyInstance {
     config: {
       PORT: number;
       PRIVATE_KEY: Hex;
       NODE_ENV: "development" | "production" | "test";
+      SESSION_SECRET: string;
     };
   }
 }
 
 const schema = {
   type: "object",
-  required: ["PORT", "PRIVATE_KEY"],
+  required: ["PORT", "PRIVATE_KEY", "SESSION_SECRET"],
   properties: {
     PORT: {
       type: "number",
@@ -32,7 +31,7 @@ const schema = {
     PRIVATE_KEY: {
       type: "string",
     },
-    TEST_VAR: {
+    SESSION_SECRET: {
       type: "string",
     },
   },
@@ -42,7 +41,7 @@ export default fp(async function (fastify: FastifyInstance) {
   fastify
     .register(fastifyEnv, {
       schema,
-      dotenv: !TEST ? true : false,
+      dotenv: true,
       data: process.env,
     })
     .ready((err) => {

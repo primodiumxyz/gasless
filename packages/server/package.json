@@ -16,10 +16,11 @@
   },
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
+    "@fastify/cookie": "^9.3.1",
     "@fastify/env": "^4.4.0",
     "@fastify/sensible": "^5.0.0",
-    "fastify": "^4.26.1",
-    "fastify-cli": "^6.2.1",
+    "@fastify/session": "^10.9.0",
+    "fastify": "^4.26.2",
     "fastify-plugin": "^4.0.0",
     "viem": "^2.17.3"
   },
