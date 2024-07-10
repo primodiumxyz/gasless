@@ -1,0 +1,10 @@
+{
+  "extends": "../../.tsconfigs/bundler/no-dom/library.json", 
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*"],
+}

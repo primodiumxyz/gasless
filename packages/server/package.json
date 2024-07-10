@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with Fastify-CLI.",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "test": "node --test test/**/*.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/autoload": "^5.0.0",
+    "@fastify/env": "^4.4.0",
+    "@fastify/sensible": "^5.0.0",
+    "fastify": "^4.26.1",
+    "fastify-cli": "^6.2.1",
+    "fastify-plugin": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.16.2"
+  }
+}
