@@ -8,6 +8,12 @@ export default defineConfig({
     forceRerunTriggers: ["**/*.ts"],
     silent: false,
     reporters: ["verbose"],
+    // for testing locally and in CI
+    env: {
+      PRIVATE_KEY: "0x123",
+      PORT: "3000",
+      SESSION_SECRET: "pqu3QS3OUB9tIiWntAEI7PkaIfp2H73Me2Lqq340FXc2",
+    },
     server: {
       deps: {
         inline: ["@fastify/autoload"],

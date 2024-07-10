@@ -5,6 +5,8 @@ import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 import { Hex } from "viem";
 
+import { TEST } from "@/utils/constants";
+
 declare module "fastify" {
   interface FastifyInstance {
     config: {
@@ -41,7 +43,7 @@ export default fp(async function (fastify: FastifyInstance) {
   fastify
     .register(fastifyEnv, {
       schema,
-      dotenv: true,
+      dotenv: TEST ? false : true,
       data: process.env,
     })
     .ready((err) => {
