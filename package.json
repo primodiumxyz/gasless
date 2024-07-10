@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm -filter server dev",
-    "lint": "pnpm eslint --cache .",
+    "lint": "pnpm eslint --cache --fix .",
     "prepare": "husky && husky install",
     "sort-package-json": "npx sort-package-json package.json 'packages/*/package.json'",
     "test": "pnpm -r test",
