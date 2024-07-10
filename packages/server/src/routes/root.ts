@@ -1,9 +1,9 @@
-'use strict'
+"use strict";
 
-import { FastifyInstance } from "fastify"
+import { FastifyInstance } from "fastify";
 
-export default async function routes (fastify: FastifyInstance) {
-  fastify.get('/', async function (request, reply) {
-    return { status: "OK" }
-  })
+export default async function routes(fastify: FastifyInstance) {
+  fastify.get("/", async function () {
+    return { status: "OK" };
+  });
 }

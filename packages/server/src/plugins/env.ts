@@ -1,43 +1,46 @@
-'use strict'
+"use strict";
 
-import { FastifyInstance } from "fastify"
-import fp from 'fastify-plugin';
-import fastifyEnv from '@fastify/env';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import fastifyEnv from "@fastify/env";
+import { FastifyInstance } from "fastify";
+import fp from "fastify-plugin";
+import { Hex } from "viem";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-declare module 'fastify' {
+declare module "fastify" {
   interface FastifyInstance {
-    config: { // this should be same as the confKey in options
+    config: {
+      // this should be same as the confKey in options
       // specify your typing here
-      PORT: number
+      PORT: number;
+      PRIVATE_KEY: Hex;
     };
   }
 }
 
 const schema = {
-  type: 'object',
-  required: [ 'PORT' ],
+  type: "object",
+  required: ["PORT", "PRIVATE_KEY"],
   properties: {
     PORT: {
       type: "number",
-      default: 3000
-    }
-  }
-}
+      default: 3000,
+    },
+    PRIVATE_KEY: {
+      type: "string",
+    },
+  },
+};
 
 export default fp(async function (fastify: FastifyInstance) {
-  fastify.register(fastifyEnv, {
-    schema,
-    dotenv: {
-      path: join(__dirname, '../../.env'),
-      debug: true,
-      encoding: 'utf8'
-    },
-  }).ready((err) => {
-    if (err) console.error(err);
-  })
-})
+  fastify
+    .register(fastifyEnv, {
+      schema,
+      dotenv: true,
+    })
+    .ready((err) => {
+      if (err) {
+        console.log(err);
+        process.exit(1);
+      }
+      fastify.log.info("env vars loaded");
+    });
+});
