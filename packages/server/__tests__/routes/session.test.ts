@@ -2,8 +2,9 @@ import supertest from "supertest";
 import TestAgent from "supertest/lib/agent";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 
-import { start } from "@/app";
+
 import { loginUser, logoutUser } from "@tests/lib/session";
+import { start } from "@/app";
 
 let agent: TestAgent;
 let app: Awaited<ReturnType<typeof start>>;
@@ -13,6 +14,11 @@ beforeAll(async () => {
   agent = supertest.agent(app.fastify.server);
 });
 
+afterAll(async () => {
+  await app.dispose();
+});
+
+// make sure tests are isolated
 beforeEach(async () => {
   await logoutUser(agent);
 });
@@ -21,7 +27,7 @@ it("should include user session in cookie header", async () => {
   const response = await agent.get("/session").expect(200);
 
   expect(response.headers).toHaveProperty("set-cookie");
-  expect(response.headers["set-cookie"]).toBeDefined();
+  expect(response.headers["set-cookie"]).toBeTruthy();
 });
 
 it("should not be authenticated by default", async () => {
@@ -46,8 +52,4 @@ it("should return unauthenticated after logout", async () => {
 
   const response = await agent.get("/session").expect(200);
   expect(response.body).toEqual({ authenticated: false });
-});
-
-afterAll(async () => {
-  await app.dispose();
 });
