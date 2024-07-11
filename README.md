@@ -21,9 +21,9 @@ To run tests:
 
 ```bash
 pnpm test
-or
+#or
 pnpm test:watch
-or
+#or
 pnpm test:ui
 ```
 
