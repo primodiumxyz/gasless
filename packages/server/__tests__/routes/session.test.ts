@@ -22,11 +22,10 @@ beforeEach(async () => {
   await logoutUser(agent);
 });
 
-it("should include user session in cookie header", async () => {
+it("should not include user session when uninitialized", async () => {
   const response = await agent.get("/session").expect(200);
 
-  expect(response.headers).toHaveProperty("set-cookie");
-  expect(response.headers["set-cookie"]).toBeTruthy();
+  expect(response.headers["set-cookie"]).toBeFalsy();
 });
 
 it("should not be authenticated by default", async () => {

@@ -28,6 +28,7 @@ export default fp(async function (fastify: FastifyInstance) {
       secret: fastify.config.SESSION_SECRET,
       cookieName: "session",
       cookiePrefix: "pri-",
+      saveUninitialized: false,
       cookie: {
         secure: PROD ? true : false,
         httpOnly: true,
