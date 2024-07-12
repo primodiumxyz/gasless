@@ -3,17 +3,21 @@
 import fastifyEnv from "@fastify/env";
 import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
-import { Hex } from "viem";
+import { Chain, createWalletClient, Hex, http, HttpTransport, PrivateKeyAccount, WalletClient } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { foundry } from "viem/chains";
 
-import { TEST } from "@/utils/constants";
+import { calderaSepolia } from "@/utils/chain";
+import { PROD, TEST } from "@/utils/constants";
 
 declare module "fastify" {
   interface FastifyInstance {
     config: {
       PORT: number;
-      PRIVATE_KEY: Hex;
+      PRIVATE_KEY: Hex | null;
       NODE_ENV: "development" | "production" | "test";
       SESSION_SECRET: string;
+      WALLET: WalletClient<HttpTransport, Chain, PrivateKeyAccount>;
     };
   }
 }
@@ -49,7 +53,18 @@ export default fp(async function (fastify: FastifyInstance) {
     .ready((err) => {
       if (err) {
         fastify.log.error(err);
+        process.exit(1);
       }
+
+      const account = privateKeyToAccount(fastify.config.PRIVATE_KEY!);
+      fastify.config.PRIVATE_KEY = null;
+
+      fastify.config.WALLET = createWalletClient({
+        account,
+        transport: http(),
+        chain: PROD ? calderaSepolia : foundry,
+      });
+
       fastify.log.info("Environment variables loaded successfully.");
     });
 });

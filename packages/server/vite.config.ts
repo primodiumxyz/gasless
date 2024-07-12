@@ -10,9 +10,9 @@ export default defineConfig({
     reporters: ["verbose"],
     // for testing locally and in CI
     env: {
-      PRIVATE_KEY: "0x123",
       PORT: "3000",
       SESSION_SECRET: "pqu3QS3OUB9tIiWntAEI7PkaIfp2H73Me2Lqq340FXc2",
+      PRIVATE_KEY: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
     },
     server: {
       deps: {

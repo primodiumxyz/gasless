@@ -2,15 +2,15 @@ import fastifyCookie from "@fastify/cookie";
 import { fastifySession } from "@fastify/session";
 import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
+import { Address } from "viem";
 
 import { PROD } from "@/utils/constants";
 
 // Extend fastify.session with your custom type.
 declare module "fastify" {
   interface Session {
-    user_id: string;
-    authenticated: boolean;
-    other_key: string;
+    authenticated?: boolean;
+    address?: Address;
     id?: number;
   }
 }

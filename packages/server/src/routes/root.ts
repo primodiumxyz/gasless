@@ -2,7 +2,7 @@
 
 import { FastifyInstance } from "fastify";
 
-export default async function routes(fastify: FastifyInstance) {
+export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function () {
     return { status: "OK" };
   });
