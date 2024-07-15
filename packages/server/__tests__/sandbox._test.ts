@@ -43,7 +43,10 @@ it("test", async () => {
   const valid = await verifyTypedData({
     address: walletClient.account.address,
     primaryType: "Call",
-
+    domain: {
+      name: walletClient.chain.name,
+      version: "1",
+    },
     types,
     message,
     signature,

@@ -12,7 +12,7 @@ export default async function (fastify: FastifyInstance) {
     };
   });
 
-  fastify.post("/", async function (request) {
+  fastify.post("/", async function (request, reply) {
     const { address, worldAddress, systemId, callData, signature } = request.body as {
       address: Address;
       worldAddress: Address;
@@ -21,21 +21,26 @@ export default async function (fastify: FastifyInstance) {
       signature: Hex;
     };
 
-    const worldContract = getContract({
-      address: worldAddress,
-      abi: Abi,
-      client: fastify.config.WALLET,
-    });
+    try {
+      const worldContract = getContract({
+        address: worldAddress,
+        abi: Abi,
+        client: fastify.config.WALLET,
+      });
 
-    const hash = await worldContract.write.callWithSignature([address, systemId, callData, signature]);
+      const hash = await worldContract.write.callWithSignature([address, systemId, callData, signature]);
 
-    request.session.authenticated = true;
-    request.session.address = address;
+      request.session.authenticated = true;
+      request.session.address = address;
 
-    return {
-      authenticated: true,
-      txHash: hash,
-    };
+      return {
+        authenticated: true,
+        txHash: hash,
+      };
+    } catch (error) {
+      console.error("Error in contract write operation:", error);
+      return reply.badRequest("Failed to execute contract write operation");
+    }
   });
 
   fastify.delete("/", async function (request, reply) {
@@ -47,7 +52,7 @@ export default async function (fastify: FastifyInstance) {
         }
       });
     }
-    return { authenticated: false, txQueue: [], txQueueLength: 0 };
+    return { authenticated: false };
   });
 }
 

@@ -1,0 +1,37 @@
+import { defineWorld } from "@latticexyz/world";
+
+export default defineWorld({
+  modules: [
+    {
+      name: "Unstable_CallWithSignatureModule",
+      root: true,
+      args: [],
+    },
+  ],
+  tables: {
+    Counter: {
+      schema: {
+        value: "uint32",
+      },
+      key: [],
+    },
+    Position: {
+      schema: {
+        id: "bytes32",
+        x: "int32",
+        y: "int32",
+      },
+      key: ["id"],
+      codegen: { dataStruct: false },
+    },
+    Inventory: {
+      schema: {
+        id: "bytes32",
+        totalWeight: "uint256",
+        items: "uint32[]",
+        weights: "uint32[]",
+      },
+      key: ["id"],
+    },
+  },
+});

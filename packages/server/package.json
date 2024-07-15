@@ -23,9 +23,11 @@
     "@latticexyz/world-modules": "^2.0.12",
     "fastify": "^4.26.2",
     "fastify-plugin": "^4.0.0",
+    "tevm": "1.1.0-next.98",
     "viem": "^2.17.3"
   },
   "devDependencies": {
+    "@latticexyz/common": "^2.0.12",
     "@types/node": "^20.14.10",
     "@types/supertest": "^6.0.2",
     "@vitest/ui": "^2.0.1",
