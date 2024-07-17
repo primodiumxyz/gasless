@@ -38,7 +38,7 @@ it("should not be authenticated by default", async () => {
 });
 
 it("should return authenticated after login", async () => {
-  await loginUser(user, agent, app.fastify);
+  await loginUser(user, agent);
 
   //check response again for sanity
   const response = await agent.get("/session").expect(200);
@@ -48,7 +48,7 @@ it("should return authenticated after login", async () => {
 
 it("should return unauthenticated after logout", async () => {
   //login
-  await loginUser(user, agent, app.fastify);
+  await loginUser(user, agent);
 
   //logout
   await logoutUser(agent);
@@ -57,4 +57,9 @@ it("should return unauthenticated after logout", async () => {
   const response = await agent.get("/session").expect(200);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   expect(response.body.authenticated).toBe(false);
+});
+
+it("should be able to login 20 users in quick succession", async () => {
+  const users = Array.from({ length: 100 }, () => createUserWallet());
+  await Promise.all(users.map((user) => loginUser(user, agent)));
 });

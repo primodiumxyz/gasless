@@ -4,6 +4,7 @@ import { FastifyInstance } from "fastify";
 import { Address, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
+import { WALLET } from "@/utils/constants";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function (request) {
@@ -13,6 +14,16 @@ export default async function (fastify: FastifyInstance) {
   });
 
   fastify.post("/", async function (request, reply) {
+    // if (request.session.authenticated) {
+    //   request.session.destroy((err) => {
+    //     if (err) {
+    //       void reply.internalServerError("Failed to destroy session.");
+    //       fastify.log.error(err);
+    //     }
+    //     request.session.authenticated = false;
+    //   });
+    // }
+
     const { address, worldAddress, systemId, callData, signature } = request.body as {
       address: Address;
       worldAddress: Address;
@@ -25,10 +36,16 @@ export default async function (fastify: FastifyInstance) {
       const worldContract = getContract({
         address: worldAddress,
         abi: Abi,
-        client: fastify.config.WALLET,
+        client: WALLET,
       });
 
-      const hash = await worldContract.write.callWithSignature([address, systemId, callData, signature]);
+      const hash = await fastify.TransactionManager.queueTx(
+        async () => await worldContract.write.callWithSignature([address, systemId, callData, signature]),
+      );
+
+      await WALLET.waitForTransactionReceipt({
+        hash,
+      });
 
       request.session.authenticated = true;
       request.session.address = address;

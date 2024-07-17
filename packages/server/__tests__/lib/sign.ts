@@ -1,4 +1,5 @@
 import { hexToResource } from "@latticexyz/common";
+import { callWithSignatureTypes } from "@latticexyz/world/internal";
 import { Account, Address, Chain, Hex, toHex, Transport, WalletClient } from "viem";
 import { signTypedData } from "viem/actions";
 
@@ -12,19 +13,10 @@ type SignCallOptions = {
   nonce?: bigint | null;
 };
 
-const callWithSignatureTypes = {
-  Call: [
-    { name: "signer", type: "address" },
-    { name: "systemNamespace", type: "string" },
-    { name: "systemName", type: "string" },
-    { name: "callData", type: "bytes" },
-    { name: "nonce", type: "uint256" },
-  ],
-} as const;
-
 export async function signCall({ userClient, worldAddress, systemId, callData, nonce: initialNonce }: SignCallOptions) {
   const nonce =
     initialNonce ??
+    //TODO: implement this
     // tables.CallWithSignatureNonces.getWithKeys({ signer: userAccountClient.account.address })?.nonce ??
     0n;
 

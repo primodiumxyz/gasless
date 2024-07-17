@@ -4,7 +4,7 @@ import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 import { Address } from "viem";
 
-import { PROD } from "@/utils/constants";
+import { PROD, SESSION_SECRET } from "@/utils/constants";
 
 // Extend fastify.session with your custom type.
 declare module "fastify" {
@@ -25,7 +25,7 @@ export default fp(async function (fastify: FastifyInstance) {
 
   fastify
     .register(fastifySession, {
-      secret: fastify.config.SESSION_SECRET,
+      secret: SESSION_SECRET,
       cookieName: "session",
       cookiePrefix: "pri-",
       saveUninitialized: false,

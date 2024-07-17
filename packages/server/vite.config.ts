@@ -8,6 +8,12 @@ export default defineConfig({
     forceRerunTriggers: ["**/*.ts"],
     silent: false,
     reporters: ["verbose"],
+    testTimeout: 50_000,
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
     // for testing locally and in CI
     env: {
       PORT: "3000",

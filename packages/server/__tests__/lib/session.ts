@@ -1,8 +1,8 @@
-import { FastifyInstance } from "fastify";
 import TestAgent from "supertest/lib/agent";
 import { Address, Chain, encodeFunctionData, HttpTransport, PrivateKeyAccount, WalletClient } from "viem";
 import { expect } from "vitest";
 
+import { WALLET } from "@/utils/constants";
 import { getSystemId } from "@tests/lib/common";
 import { UNLIMITED_DELEGATION } from "@tests/lib/constants";
 import { signCall } from "@tests/lib/sign";
@@ -13,12 +13,11 @@ import worlds from "../../../test-contracts/worlds.json";
 export async function loginUser<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
-  fastify: FastifyInstance,
 ) {
   const delegateCallData = encodeFunctionData({
     abi: WorldAbi,
     functionName: "registerDelegation",
-    args: [fastify.config.WALLET.account.address, UNLIMITED_DELEGATION, "0x"],
+    args: [WALLET.account.address, UNLIMITED_DELEGATION, "0x"],
   });
 
   const signature = await signCall({

@@ -8,9 +8,9 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "dev": "NODE_ENV=development tsx watch src/index.ts",
+    "dev": "NODE_ENV=development dotenvx run -- tsx watch src/index.ts",
     "start": "NODE_ENV=production tsx src/index.ts",
-    "test": "NODE_ENV=test vitest run",
+    "test": "NODE_ENV=test vitest",
     "test:ui": "NODE_ENV=test vitest --ui",
     "test:watch": "NODE_ENV=test vitest"
   },
@@ -23,14 +23,20 @@
     "@latticexyz/world-modules": "^2.0.12",
     "fastify": "^4.26.2",
     "fastify-plugin": "^4.0.0",
-    "tevm": "1.1.0-next.98",
     "viem": "^2.17.3"
   },
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.6.4",
     "@latticexyz/common": "^2.0.12",
+    "@latticexyz/protocol-parser": "^2.0.12",
+    "@latticexyz/store": "2.0.9",
+    "@latticexyz/world": "2.0.9",
+    "@types/ioredis-mock": "^8.2.5",
     "@types/node": "^20.14.10",
     "@types/supertest": "^6.0.2",
     "@vitest/ui": "^2.0.1",
+    "abitype": "^1.0.5",
+    "ioredis-mock": "^8.9.0",
     "supertest": "^7.0.0",
     "tsx": "^4.16.2",
     "vite-tsconfig-paths": "^4.3.2",

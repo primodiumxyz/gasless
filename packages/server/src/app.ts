@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import autoLoad from "@fastify/autoload";
 import fastify from "fastify";
 
-import { DEV } from "@/utils/constants";
+import { DEV, PORT } from "@/utils/constants";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -55,7 +55,7 @@ export async function build() {
 export async function start() {
   const fastify = await build();
 
-  fastify.listen({ port: fastify.config.PORT }, (err, address) => {
+  fastify.listen({ port: PORT }, (err, address) => {
     if (err) {
       console.error(err);
     }
