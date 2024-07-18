@@ -1,4 +1,4 @@
-import { createWalletClient, http } from "viem";
+import { createWalletClient, http, publicActions } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { foundry } from "viem/chains";
 
@@ -9,7 +9,7 @@ export function createUserWallet() {
     account,
     transport: http(),
     chain: foundry,
-  });
+  }).extend(publicActions);
 
   return walletClient;
 }

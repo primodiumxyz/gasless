@@ -8,7 +8,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm -filter server dev",
+    "deploy:local": "pnpm -filter test-contracts deploy:local",
+    "dev": "pnpm -r dev",
+    "dev:contracts": "pnpm -filter test-contracts dev",
+    "dev:server": "pnpm -filter server dev",
     "lint": "pnpm eslint --cache --fix .",
     "prepare": "husky && husky install",
     "sort-package-json": "npx sort-package-json package.json 'packages/*/package.json'",

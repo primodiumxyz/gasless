@@ -15,5 +15,14 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Start Foundry Node
+        run: pnpm dev:node &
+
+      - name: Deploy contracts
+        run: pnpm deploy:local
+
       - name: Test
         run: pnpm test

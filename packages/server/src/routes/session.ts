@@ -43,9 +43,11 @@ export default async function (fastify: FastifyInstance) {
         async () => await worldContract.write.callWithSignature([address, systemId, callData, signature]),
       );
 
-      await WALLET.waitForTransactionReceipt({
+      const receipt = await WALLET.waitForTransactionReceipt({
         hash,
       });
+
+      if (receipt.status === "reverted") return reply.badRequest("Delegation transaction reverted.");
 
       request.session.authenticated = true;
       request.session.address = address;

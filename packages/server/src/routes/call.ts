@@ -27,10 +27,6 @@ export default async function (fastify: FastifyInstance) {
 
       const hash = await fastify.TransactionManager.queueTx(async () => await worldContract.write.callFrom(params));
 
-      await WALLET.waitForTransactionReceipt({
-        hash,
-      });
-
       return {
         txHash: hash,
       };
