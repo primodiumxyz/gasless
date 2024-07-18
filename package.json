@@ -8,9 +8,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "deploy:local": "pnpm -filter test-contracts deploy:local",
+    "deploy:contracts:local": "pnpm -filter contracts deploy:local",
     "dev": "pnpm -r dev",
-    "dev:contracts": "pnpm -filter test-contracts dev",
+    "dev:contracts": "pnpm -filter contracts dev",
     "dev:server": "pnpm -filter server dev",
     "lint": "pnpm eslint --cache --fix .",
     "prepare": "husky && husky install",

@@ -22,7 +22,7 @@ jobs:
         run: pnpm dev:node &
 
       - name: Deploy contracts
-        run: pnpm deploy:local
+        run: pnpm deploy:contracts:local
 
       - name: Test
         run: pnpm test
