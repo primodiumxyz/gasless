@@ -3,7 +3,6 @@ import TestAgent from "supertest/lib/agent";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 
 import { start } from "@/app";
-import { move } from "@tests/lib/calls";
 import { sleep } from "@tests/lib/common";
 import { loginUser, logoutUser } from "@tests/lib/session";
 import { createUserWallet } from "@tests/lib/wallet";
