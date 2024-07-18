@@ -11,6 +11,7 @@
     "deploy:contracts:local": "pnpm -filter contracts deploy:local",
     "dev": "pnpm -r dev",
     "dev:contracts": "pnpm -filter contracts dev",
+    "dev:node": "pnpm -filter contracts devnode",
     "dev:server": "pnpm -filter server dev",
     "lint": "pnpm eslint --cache --fix .",
     "prepare": "husky && husky install",
