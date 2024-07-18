@@ -9,12 +9,14 @@ import type testContractsAbiType from "../../../test-contracts/out/IWorld.sol/IW
 import worlds from "../../../test-contracts/worlds.json";
 
 export const UNLIMITED_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "unlimited" });
+export const TIMEBOUND_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "timebound" });
+export const SYSTEMBOUND_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "systembound" });
 export const CHAIN_ID = 31337;
-export const TEST_ABI = testContractsAbi as typeof testContractsAbiType;
+export const TEST_WORLD_ABI = testContractsAbi as typeof testContractsAbiType;
 export const TEST_WORLD_ADDRESS = worlds[CHAIN_ID].address as Address;
 export const TEST_MUD_CONFIG = testConfig;
 export const TEST_WORLD_CONTRACT = getContract({
   address: TEST_WORLD_ADDRESS,
-  abi: TEST_ABI,
+  abi: TEST_WORLD_ABI,
   client: WALLET,
 });

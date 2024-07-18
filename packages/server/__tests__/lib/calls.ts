@@ -3,7 +3,7 @@ import TestAgent from "supertest/lib/agent";
 import { Hex } from "viem";
 
 import { getSystemId } from "@tests/lib/common";
-import { TEST_ABI, TEST_WORLD_ADDRESS } from "@tests/lib/constants";
+import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS } from "@tests/lib/constants";
 import { encodeSystemCallFrom } from "@tests/lib/encode";
 
 async function submit(agent: TestAgent, params: Awaited<ReturnType<typeof encodeSystemCallFrom>>) {
@@ -15,7 +15,7 @@ async function submit(agent: TestAgent, params: Awaited<ReturnType<typeof encode
 
 export async function move(agent: TestAgent, from: Address, coord: { x: number; y: number }) {
   const params = await encodeSystemCallFrom({
-    abi: TEST_ABI,
+    abi: TEST_WORLD_ABI,
     functionName: "move",
     args: [coord.x, coord.y],
     systemId: getSystemId("TestSystem"),

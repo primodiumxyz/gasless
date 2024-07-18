@@ -13,7 +13,7 @@ export const UserDelegationControl = {
     delegatee: "address",
     delegationControlId: "bytes32",
   },
-  key: ["delagotor", "delegatee"],
+  key: ["delegator", "delegatee"],
 } as const;
 
 export const CallWithSignatureNonces = {

@@ -1,10 +1,11 @@
 "use strict";
 
 import { FastifyInstance } from "fastify";
-import { Address, getContract, Hex } from "viem";
+import { Address, decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
 import { WALLET } from "@/utils/constants";
+import { SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@tests/lib/constants";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function (request) {
@@ -14,16 +15,6 @@ export default async function (fastify: FastifyInstance) {
   });
 
   fastify.post("/", async function (request, reply) {
-    // if (request.session.authenticated) {
-    //   request.session.destroy((err) => {
-    //     if (err) {
-    //       void reply.internalServerError("Failed to destroy session.");
-    //       fastify.log.error(err);
-    //     }
-    //     request.session.authenticated = false;
-    //   });
-    // }
-
     const { address, worldAddress, systemId, callData, signature } = request.body as {
       address: Address;
       worldAddress: Address;
@@ -33,6 +24,28 @@ export default async function (fastify: FastifyInstance) {
     };
 
     try {
+      //check delegation type since we only support unlimited and timebound. Also will need to update user session to match delegation expiration
+      const {
+        args: [, delegationControlId, initCallData],
+      } = decodeFunctionData({
+        abi: Abi,
+        data: callData,
+      });
+
+      if (delegationControlId === SYSTEMBOUND_DELEGATION) {
+        return reply.badRequest("Systembound delegation is not supported yet.");
+      }
+
+      if (delegationControlId === TIMEBOUND_DELEGATION) {
+        const {
+          args: [, delegationExpiration],
+        } = decodeFunctionData({
+          abi: Abi,
+          data: initCallData as Hex,
+        });
+        request.session.cookie.expires = new Date(Number(delegationExpiration) * 1000);
+      }
+
       const worldContract = getContract({
         address: worldAddress,
         abi: Abi,

@@ -1,37 +1,48 @@
 import TestAgent from "supertest/lib/agent";
-import { Address, Chain, encodeFunctionData, HttpTransport, PrivateKeyAccount, WalletClient } from "viem";
+import { Chain, encodeFunctionData, HttpTransport, PrivateKeyAccount, WalletClient } from "viem";
 import { expect } from "vitest";
 
+import { Abi } from "@/utils/abi";
 import { WALLET } from "@/utils/constants";
 import { getSystemId } from "@tests/lib/common";
-import { UNLIMITED_DELEGATION } from "@tests/lib/constants";
+import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS, TIMEBOUND_DELEGATION, UNLIMITED_DELEGATION } from "@tests/lib/constants";
+import { fetchSignatureNonce } from "@tests/lib/fetch";
 import { signCall } from "@tests/lib/sign";
-
-import WorldAbi from "../../../test-contracts/out/IWorld.sol/IWorld.abi.json";
-import worlds from "../../../test-contracts/worlds.json";
 
 export async function loginUser<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
+  sessionLength?: number, //in seconds
 ) {
   const delegateCallData = encodeFunctionData({
-    abi: WorldAbi,
+    abi: TEST_WORLD_ABI,
     functionName: "registerDelegation",
-    args: [WALLET.account.address, UNLIMITED_DELEGATION, "0x"],
+    args: [
+      WALLET.account.address,
+      sessionLength ? TIMEBOUND_DELEGATION : UNLIMITED_DELEGATION,
+      sessionLength
+        ? encodeFunctionData({
+            abi: Abi,
+            functionName: "initDelegation",
+            args: [user.account.address, BigInt(Math.floor(Date.now() / 1000) + sessionLength)],
+          })
+        : "0x",
+    ],
   });
 
   const signature = await signCall({
     userClient: user,
-    worldAddress: worlds[31337].address as Address,
+    worldAddress: TEST_WORLD_ADDRESS,
     systemId: getSystemId("Registration"),
     callData: delegateCallData,
+    nonce: await fetchSignatureNonce(user.account.address),
   });
 
   const response = await agent
     .post("/session")
     .send({
-      address: user.account?.address,
-      worldAddress: worlds[31337].address,
+      address: user.account.address,
+      worldAddress: TEST_WORLD_ADDRESS,
       callData: delegateCallData,
       systemId: getSystemId("Registration"),
       signature,

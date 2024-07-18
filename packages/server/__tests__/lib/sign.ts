@@ -10,16 +10,10 @@ type SignCallOptions = {
   worldAddress: Address;
   systemId: Hex;
   callData: Hex;
-  nonce?: bigint | null;
+  nonce?: bigint;
 };
 
-export async function signCall({ userClient, worldAddress, systemId, callData, nonce: initialNonce }: SignCallOptions) {
-  const nonce =
-    initialNonce ??
-    //TODO: implement this
-    // tables.CallWithSignatureNonces.getWithKeys({ signer: userAccountClient.account.address })?.nonce ??
-    0n;
-
+export async function signCall({ userClient, worldAddress, systemId, callData, nonce = 0n }: SignCallOptions) {
   const { namespace: systemNamespace, name: systemName } = hexToResource(systemId);
 
   return await signTypedData(userClient, {

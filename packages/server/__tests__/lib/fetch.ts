@@ -2,7 +2,7 @@ import { decodeValueArgs } from "@latticexyz/protocol-parser/internal";
 import { Address, Hex, padHex } from "viem";
 
 import { TEST_MUD_CONFIG, TEST_WORLD_CONTRACT } from "@tests/lib/constants";
-import { FunctionSelectors } from "@tests/lib/tableDefs";
+import { CallWithSignatureNonces, FunctionSelectors } from "@tests/lib/tableDefs";
 
 export async function fetchSystemFunctionSelector(rawSelector: Hex) {
   const res = await TEST_WORLD_CONTRACT.read.getRecord([
@@ -21,6 +21,19 @@ export async function fetchSystemFunctionSelector(rawSelector: Hex) {
   }
 
   return signature;
+}
+
+export async function fetchSignatureNonce(userAddress: Address) {
+  const res = await TEST_WORLD_CONTRACT.read.getRecord([
+    CallWithSignatureNonces.tableId,
+    [padHex(userAddress, { size: 32, dir: "left" })],
+  ]);
+
+  return decodeValueArgs(CallWithSignatureNonces.schema, {
+    staticData: res[0],
+    encodedLengths: res[1],
+    dynamicData: res[2],
+  }).nonce;
 }
 
 export async function fetchUserPosition(userAddress: Address) {

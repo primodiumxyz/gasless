@@ -3,6 +3,8 @@ import TestAgent from "supertest/lib/agent";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 
 import { start } from "@/app";
+import { move } from "@tests/lib/calls";
+import { sleep } from "@tests/lib/common";
 import { loginUser, logoutUser } from "@tests/lib/session";
 import { createUserWallet } from "@tests/lib/wallet";
 
@@ -22,7 +24,6 @@ afterAll(async () => {
 // make sure tests are isolated
 beforeEach(async () => {
   user = createUserWallet();
-  await logoutUser(agent);
 });
 
 it("should not include user session when uninitialized", async () => {
@@ -54,6 +55,27 @@ it("should return unauthenticated after logout", async () => {
   await logoutUser(agent);
 
   //check response again for sanity
+  const response = await agent.get("/session").expect(200);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  expect(response.body.authenticated).toBe(false);
+});
+
+it("should allow authentication if already authenticated", async () => {
+  await loginUser(user, agent);
+
+  // try to login again
+  await loginUser(user, agent);
+
+  const response = await agent.get("/session").expect(200);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  expect(response.body.authenticated).toBe(true);
+});
+
+it("should expire session after a short timebound delegation", async () => {
+  await loginUser(user, agent, 5);
+
+  await sleep(1000 * 5);
+
   const response = await agent.get("/session").expect(200);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   expect(response.body.authenticated).toBe(false);
