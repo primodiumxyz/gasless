@@ -15,12 +15,14 @@ export default async function (fastify: FastifyInstance) {
   });
 
   fastify.post("/", async function (request, reply) {
-    const { address, worldAddress, systemId, callData, signature } = request.body as {
+    const {
+      address,
+      worldAddress,
+      params: [systemId, callData, signature],
+    } = request.body as {
       address: Address;
       worldAddress: Address;
-      systemId: Hex;
-      callData: Hex;
-      signature: Hex;
+      params: [systemId: Hex, callData: Hex, signature: Hex];
     };
 
     try {

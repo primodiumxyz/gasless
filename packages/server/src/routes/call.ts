@@ -14,9 +14,12 @@ export default async function (fastify: FastifyInstance) {
       return response.unauthorized("No address found in session. Re-delegation is required.");
 
     try {
-      const { worldAddress, params } = request.body as {
+      const {
+        worldAddress,
+        params: [from, delegationControlId, callData],
+      } = request.body as {
         worldAddress: Address;
-        params: [Hex, Hex, Hex];
+        params: [from: Address, delegationControlId: Hex, callData: Hex];
       };
 
       const worldContract = getContract({
@@ -25,7 +28,9 @@ export default async function (fastify: FastifyInstance) {
         client: WALLET,
       });
 
-      const hash = await fastify.TransactionManager.queueTx(async () => await worldContract.write.callFrom(params));
+      const hash = await fastify.TransactionManager.queueTx(
+        async () => await worldContract.write.callFrom([from, delegationControlId, callData]),
+      );
 
       return {
         txHash: hash,

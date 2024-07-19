@@ -43,9 +43,7 @@ export async function loginUser<T extends WalletClient<HttpTransport, Chain, Pri
     .send({
       address: user.account.address,
       worldAddress: TEST_WORLD_ADDRESS,
-      callData: delegateCallData,
-      systemId: getSystemId("Registration"),
-      signature,
+      params: [getSystemId("Registration"), delegateCallData, signature],
     })
     .expect(200);
 
