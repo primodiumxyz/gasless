@@ -60,6 +60,7 @@ profile*
 .env
 .env.*
 !.env.example
+!.env.test
 
 # eslint
 .eslintcache

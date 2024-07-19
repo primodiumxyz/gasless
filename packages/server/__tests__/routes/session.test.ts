@@ -1,43 +1,28 @@
-import supertest from "supertest";
-import TestAgent from "supertest/lib/agent";
-import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
-import { start } from "@/app";
-import { sleep } from "@tests/lib/common";
+import { createHttpAgent, createUserWallet, sleep } from "@tests/lib/common";
 import { loginUser, logoutUser } from "@tests/lib/session";
-import { createUserWallet } from "@tests/lib/wallet";
-
-let agent: TestAgent;
-let app: Awaited<ReturnType<typeof start>>;
-let user: ReturnType<typeof createUserWallet>;
-
-beforeAll(async () => {
-  app = await start();
-  agent = supertest.agent(app.fastify.server);
-});
-
-afterAll(async () => {
-  await app.dispose();
-});
-
-// make sure tests are isolated
-beforeEach(async () => {
-  user = createUserWallet();
-});
 
 it("should not include user session when uninitialized", async () => {
+  const agent = createHttpAgent();
+
   const response = await agent.get("/session").expect(200);
 
   expect(response.headers["set-cookie"]).toBeFalsy();
 });
 
 it("should not be authenticated by default", async () => {
+  const agent = createHttpAgent();
+
   const response = await agent.get("/session").expect(200);
 
   expect(response.body).toEqual({ authenticated: false });
 });
 
 it("should return authenticated after login", async () => {
+  const agent = createHttpAgent();
+  const user = createUserWallet();
+
   await loginUser(user, agent);
 
   //check response again for sanity
@@ -47,6 +32,9 @@ it("should return authenticated after login", async () => {
 });
 
 it("should return unauthenticated after logout", async () => {
+  const agent = createHttpAgent();
+  const user = createUserWallet();
+
   //login
   await loginUser(user, agent);
 
@@ -60,6 +48,9 @@ it("should return unauthenticated after logout", async () => {
 });
 
 it("should allow authentication if already authenticated", async () => {
+  const agent = createHttpAgent();
+  const user = createUserWallet();
+
   await loginUser(user, agent);
 
   // try to login again
@@ -71,6 +62,9 @@ it("should allow authentication if already authenticated", async () => {
 });
 
 it("should expire session after a short timebound delegation", async () => {
+  const agent = createHttpAgent();
+  const user = createUserWallet();
+
   await loginUser(user, agent, 5);
 
   await sleep(1000 * 5);

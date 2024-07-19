@@ -20,3 +20,5 @@ export const TEST_WORLD_CONTRACT = getContract({
   abi: TEST_WORLD_ABI,
   client: WALLET,
 });
+
+export const TEST_SERVER_ENDPOINT = "http://localhost:3000";

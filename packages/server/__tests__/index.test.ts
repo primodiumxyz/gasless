@@ -1,20 +1,13 @@
 import supertest from "supertest";
-import { afterAll, beforeAll, expect, it } from "vitest";
-
-import { start } from "@/app";
-
-let app: Awaited<ReturnType<typeof start>>;
-beforeAll(async () => {
-  app = await start();
-});
+import { expect, it } from "vitest";
 
 it("should respond to GET / route", async () => {
-  const { fastify } = app;
-  const response = await supertest(fastify.server).get("/").expect(200);
+  // const { fastify } = app;
+  const response = await supertest(`http://localhost:3000`).get("/").expect(200);
 
   expect(response.body).toEqual({ status: "OK" });
 });
 
-afterAll(async () => {
-  await app.dispose();
-});
+// afterAll(async () => {
+//   await app.dispose();
+// });

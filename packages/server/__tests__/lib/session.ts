@@ -24,7 +24,7 @@ export async function loginUser<T extends WalletClient<HttpTransport, Chain, Pri
         ? encodeFunctionData({
             abi: Abi,
             functionName: "initDelegation",
-            args: [user.account.address, BigInt(Math.floor(Date.now() / 1000) + sessionLength)],
+            args: [WALLET.account.address, BigInt(Math.floor(Date.now() / 1000) + sessionLength)],
           })
         : "0x",
     ],
