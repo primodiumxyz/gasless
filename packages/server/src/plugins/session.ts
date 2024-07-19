@@ -12,6 +12,7 @@ declare module "fastify" {
     authenticated?: boolean;
     address?: Address;
     id?: number;
+    worldAddress?: Address;
   }
 }
 

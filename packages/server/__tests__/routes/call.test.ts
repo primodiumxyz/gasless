@@ -5,7 +5,7 @@ import { createHttpAgent, createUserWallet, randomCoord } from "@tests/lib/commo
 import { fetchUserPosition } from "@tests/lib/fetch";
 import { loginUser, logoutUser } from "@tests/lib/session";
 
-it("it should move the user to random position", async () => {
+it("should move the user to random position", async () => {
   const user = createUserWallet();
   const agent = createHttpAgent();
 

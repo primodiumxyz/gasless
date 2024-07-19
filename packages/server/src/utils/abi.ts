@@ -5,7 +5,9 @@ import type CallWithSignatureAbiType from "@latticexyz/world-modules/out/Unstabl
 import World from "@latticexyz/world-modules/out/World.sol/World.abi.json";
 import type WorldType from "@latticexyz/world-modules/out/World.sol/World.abi.json.d.ts";
 
-export const RegisterDelegationAbi = [
+import { DelegationAbiType } from "@/utils/types";
+
+const DelegationAbi: DelegationAbiType = [
   {
     type: "function",
     name: "registerDelegation",
@@ -29,9 +31,23 @@ export const RegisterDelegationAbi = [
     outputs: [],
     stateMutability: "nonpayable",
   },
-];
+  {
+    type: "function",
+    name: "unregisterDelegation",
+    inputs: [
+      {
+        name: "delegatee",
+        type: "address",
+        internalType: "address",
+      },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+] as const;
 
-export const Abi = [...CallWithSignatureAbi, ...World, ...TimeboundDelegationControl, ...RegisterDelegationAbi] as
+export const Abi = [...CallWithSignatureAbi, ...World, ...TimeboundDelegationControl, ...DelegationAbi] as
   | typeof CallWithSignatureAbiType
   | typeof WorldType
-  | typeof TimeboundDelegationControlType;
+  | typeof TimeboundDelegationControlType
+  | DelegationAbiType;

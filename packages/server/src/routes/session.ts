@@ -66,6 +66,14 @@ export default async function (fastify: FastifyInstance) {
 
       request.session.authenticated = true;
       request.session.address = address;
+      request.session.worldAddress = worldAddress;
+
+      fastify.log.info(
+        "Registered delegation and session for user:",
+        request.session.address,
+        " in world:",
+        request.session.worldAddress,
+      );
 
       return {
         authenticated: true,
@@ -79,6 +87,31 @@ export default async function (fastify: FastifyInstance) {
 
   fastify.delete("/", async function (request, reply) {
     if (request.session.authenticated) {
+      if (!request.session.worldAddress) {
+        return reply.badRequest("User's delegation world address was not found.");
+      }
+      const worldContract = getContract({
+        address: request.session.worldAddress,
+        abi: Abi,
+        client: WALLET,
+      });
+
+      if (!request.session.address) {
+        return reply.badRequest("User's address was not found.");
+      }
+
+      const hash = await fastify.TransactionManager.queueTx(
+        async () => await worldContract.write.unregisterDelegation([request.session.address!]),
+      );
+
+      const receipt = await WALLET.waitForTransactionReceipt({
+        hash,
+      });
+
+      if (receipt.status === "reverted") return reply.badRequest("Unregister Delegation transaction reverted.");
+
+      fastify.log.info("Unregistered delegation for user:", request.session.address);
+
       request.session.destroy((err) => {
         if (err) {
           void reply.internalServerError("Failed to destroy session.");
