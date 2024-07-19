@@ -17,11 +17,14 @@
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
     "@fastify/cookie": "^9.3.1",
+    "@fastify/rate-limit": "^9.1.0",
     "@fastify/sensible": "^5.0.0",
     "@fastify/session": "^10.9.0",
     "@latticexyz/world-modules": "^2.0.12",
+    "connect-redis": "^7.1.1",
     "fastify": "^4.26.2",
     "fastify-plugin": "^4.0.0",
+    "ioredis": "^5.4.1",
     "viem": "^2.17.3"
   },
   "devDependencies": {
@@ -30,10 +33,12 @@
     "@latticexyz/protocol-parser": "^2.0.12",
     "@latticexyz/store": "2.0.9",
     "@latticexyz/world": "2.0.9",
+    "@types/ioredis-mock": "^8.2.5",
     "@types/node": "^20.14.10",
     "@types/supertest": "^6.0.2",
     "@vitest/ui": "^2.0.1",
     "abitype": "^1.0.5",
+    "ioredis-mock": "^8.9.0",
     "supertest": "^7.0.0",
     "tsx": "^4.16.2",
     "vite-tsconfig-paths": "^4.3.2",

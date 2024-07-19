@@ -1,3 +1,5 @@
+import { Redis } from "ioredis";
+import RedisMock from "ioredis-mock";
 import { createWalletClient, http, publicActions } from "viem";
 import { Address, privateKeyToAccount } from "viem/accounts";
 import { foundry } from "viem/chains";
@@ -17,3 +19,5 @@ export const WALLET = createWalletClient({
   transport: http(),
   chain: PROD ? calderaSepolia : foundry,
 }).extend(publicActions);
+
+export const REDIS = PROD ? new Redis() : new RedisMock();

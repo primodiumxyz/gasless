@@ -3,7 +3,7 @@ import { start } from "@/app";
 let teardownHappened = false;
 
 export async function setup() {
-  console.log("OPENING GASELESS SERVER");
+  console.log("⚡️ OPENING GASELESS SERVER \n");
 
   const app = await start();
 
@@ -13,6 +13,6 @@ export async function setup() {
     }
     teardownHappened = true;
     await app.dispose();
-    console.log("CLOSING GASELESS SERVER");
+    console.log("❌ CLOSING GASELESS SERVER");
   };
 }

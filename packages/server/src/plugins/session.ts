@@ -1,10 +1,11 @@
 import fastifyCookie from "@fastify/cookie";
 import { fastifySession } from "@fastify/session";
+import RedisStore from "connect-redis";
 import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 import { Address } from "viem";
 
-import { PROD, SESSION_SECRET } from "@/utils/constants";
+import { PROD, REDIS, SESSION_SECRET } from "@/utils/constants";
 
 // Extend fastify.session with your custom type.
 declare module "fastify" {
@@ -30,6 +31,7 @@ export default fp(async function (fastify: FastifyInstance) {
       cookieName: "session",
       cookiePrefix: "pri-",
       saveUninitialized: false,
+      store: new RedisStore({ client: REDIS }),
       cookie: {
         secure: PROD ? true : false,
         httpOnly: true,
