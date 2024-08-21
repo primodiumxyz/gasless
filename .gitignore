@@ -64,3 +64,6 @@ profile*
 
 # eslint
 .eslintcache
+
+# Build
+packages/server/dist

@@ -1,3 +1,4 @@
+import { resourceToHex } from "@latticexyz/common";
 import { Redis } from "ioredis";
 import RedisMock from "ioredis-mock";
 import { createWalletClient, Hex, http, publicActions } from "viem";
@@ -23,3 +24,7 @@ export const WALLET = createWalletClient({
 }).extend(publicActions);
 
 export const REDIS = PROD ? new Redis() : new RedisMock();
+
+export const UNLIMITED_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "unlimited" });
+export const TIMEBOUND_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "timebound" });
+export const SYSTEMBOUND_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "systembound" });

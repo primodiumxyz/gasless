@@ -1,13 +1,13 @@
 {
-  "extends": "../../.tsconfigs/bundler/no-dom/library.json", 
+  "extends": "../../.tsconfigs/bundler/no-dom/library.json",
   "compilerOptions": {
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@tests/*": ["./__tests__/*"],
-    },
+      "@tests/*": ["./__tests__/*"]
+    }
   },
   "exclude": ["node_modules"],
-  "include": ["**/**.ts", "../../eslint.config.js"],
+  "include": ["**/**.ts", "../../eslint.config.js"]
 }

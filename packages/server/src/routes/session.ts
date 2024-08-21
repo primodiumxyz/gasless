@@ -5,8 +5,7 @@ import { Address, decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
 import { chains } from "@/utils/chain";
-import { CHAIN, WALLET } from "@/utils/constants";
-import { SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@tests/lib/constants";
+import { CHAIN, SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION, WALLET } from "@/utils/constants";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function (request) {

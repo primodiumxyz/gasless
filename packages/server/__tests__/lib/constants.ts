@@ -1,4 +1,3 @@
-import { resourceToHex } from "@latticexyz/common";
 import { Address, getContract } from "viem";
 
 import { WALLET } from "@/utils/constants";
@@ -8,9 +7,6 @@ import testContractsAbi from "../../../test-contracts/out/IWorld.sol/IWorld.abi.
 import type testContractsAbiType from "../../../test-contracts/out/IWorld.sol/IWorld.abi.json.d.ts";
 import worlds from "../../../test-contracts/worlds.json";
 
-export const UNLIMITED_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "unlimited" });
-export const TIMEBOUND_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "timebound" });
-export const SYSTEMBOUND_DELEGATION = resourceToHex({ type: "system", namespace: "", name: "systembound" });
 export const CHAIN_ID = 31337;
 export const TEST_WORLD_ABI = testContractsAbi as typeof testContractsAbiType;
 export const TEST_WORLD_ADDRESS = worlds[CHAIN_ID].address as Address;

@@ -1,0 +1,15 @@
+{
+  "extends": "../../.tsconfigs/bundler/no-dom/library.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "declaration": true,
+    "noEmit": false,
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules", "./__tests__", "./dist"],
+  "include": ["**/**.ts"]
+}

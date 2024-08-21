@@ -3,9 +3,9 @@ import { Chain, encodeFunctionData, HttpTransport, PrivateKeyAccount, WalletClie
 import { expect } from "vitest";
 
 import { Abi } from "@/utils/abi";
-import { WALLET } from "@/utils/constants";
+import { TIMEBOUND_DELEGATION, UNLIMITED_DELEGATION, WALLET } from "@/utils/constants";
 import { getSystemId } from "@tests/lib/common";
-import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS, TIMEBOUND_DELEGATION, UNLIMITED_DELEGATION } from "@tests/lib/constants";
+import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS } from "@tests/lib/constants";
 import { fetchSignatureNonce } from "@tests/lib/fetch";
 import { signCall } from "@tests/lib/sign";
 

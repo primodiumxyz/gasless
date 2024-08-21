@@ -1,14 +1,17 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with Fastify-CLI.",
+  "description": "A library for creating a MUD-compliant gasless server.",
   "keywords": [],
   "license": "MIT",
   "author": "",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "dev": "NODE_ENV=development dotenvx run -- tsx watch src/index.ts",
     "start": "NODE_ENV=production tsx src/index.ts",
     "test": "NODE_ENV=test dotenvx run -f .env.test -- vitest --run",
