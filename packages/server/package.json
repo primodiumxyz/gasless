@@ -8,6 +8,7 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
+    "build": "tsc",
     "dev": "NODE_ENV=development dotenvx run -- tsx watch src/index.ts",
     "start": "NODE_ENV=production tsx src/index.ts",
     "test": "NODE_ENV=test dotenvx run -f .env.test -- vitest --run",
@@ -25,7 +26,7 @@
     "fastify": "^4.26.2",
     "fastify-plugin": "^4.0.0",
     "ioredis": "^5.4.1",
-    "viem": "^2.17.3"
+    "viem": "^2.9.20"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.6.4",

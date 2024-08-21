@@ -4,7 +4,8 @@ import { FastifyInstance } from "fastify";
 import { Address, decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
-import { WALLET } from "@/utils/constants";
+import { chains } from "@/utils/chain";
+import { CHAIN, WALLET } from "@/utils/constants";
 import { SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@tests/lib/constants";
 
 export default async function (fastify: FastifyInstance) {
@@ -55,7 +56,11 @@ export default async function (fastify: FastifyInstance) {
       });
 
       const hash = await fastify.TransactionManager.queueTx(
-        async () => await worldContract.write.callWithSignature([address, systemId, callData, signature]),
+        async () =>
+          await worldContract.write.callWithSignature([address, systemId, callData, signature], {
+            account: request.session.address,
+            chain: chains[CHAIN],
+          }),
       );
 
       const receipt = await WALLET.waitForTransactionReceipt({
@@ -101,7 +106,11 @@ export default async function (fastify: FastifyInstance) {
       }
 
       const hash = await fastify.TransactionManager.queueTx(
-        async () => await worldContract.write.unregisterDelegation([request.session.address!]),
+        async () =>
+          await worldContract.write.unregisterDelegation([request.session.address!], {
+            account: request.session.address,
+            chain: chains[CHAIN],
+          }),
       );
 
       const receipt = await WALLET.waitForTransactionReceipt({
