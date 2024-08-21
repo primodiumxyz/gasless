@@ -6,7 +6,11 @@
   "license": "MIT",
   "author": "",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
+  "types": "dist/app.d.ts",
+  "bin": {
+    "gasless-server": "./dist/index.js"
+  },
   "files": [
     "dist"
   ],
