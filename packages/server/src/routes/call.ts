@@ -32,7 +32,7 @@ export default async function (fastify: FastifyInstance) {
       const hash = await fastify.TransactionManager.queueTx(
         async () =>
           await worldContract.write.callFrom([from, delegationControlId, callData], {
-            account: request.session.address,
+            account: WALLET.account,
             chain: chains[CHAIN],
           }),
       );

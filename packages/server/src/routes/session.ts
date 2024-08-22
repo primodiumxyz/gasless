@@ -57,7 +57,7 @@ export default async function (fastify: FastifyInstance) {
       const hash = await fastify.TransactionManager.queueTx(
         async () =>
           await worldContract.write.callWithSignature([address, systemId, callData, signature], {
-            account: request.session.address,
+            account: WALLET.account,
             chain: chains[CHAIN],
           }),
       );
@@ -107,7 +107,7 @@ export default async function (fastify: FastifyInstance) {
       const hash = await fastify.TransactionManager.queueTx(
         async () =>
           await worldContract.write.unregisterDelegation([request.session.address!], {
-            account: request.session.address,
+            account: WALLET.account,
             chain: chains[CHAIN],
           }),
       );
