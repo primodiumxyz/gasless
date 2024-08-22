@@ -59,6 +59,9 @@ importers:
       connect-redis:
         specifier: ^7.1.1
         version: 7.1.1(express-session@1.18.0)
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       fastify:
         specifier: ^4.26.2
         version: 4.28.1

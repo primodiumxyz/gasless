@@ -30,6 +30,7 @@
     "@fastify/session": "^10.9.0",
     "@latticexyz/world-modules": "^2.0.12",
     "connect-redis": "^7.1.1",
+    "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
     "fastify-plugin": "^4.0.0",
     "ioredis": "^5.4.1",
