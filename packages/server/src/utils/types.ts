@@ -55,13 +55,7 @@ export type GetRoute = Extract<Route, "/" | "/session">;
 export type PostRoute = Extract<Route, "/call" | "/session">;
 
 export type RouteParams<T extends Route, M extends "GET" | "POST"> = M extends "GET"
-  ? T extends "/"
-    ? RouteRootGetParams
-    : T extends "/call"
-      ? never
-      : T extends "/session"
-        ? RouteSessionGetParams
-        : never
+  ? never
   : T extends "/"
     ? never
     : T extends "/call"
@@ -87,13 +81,11 @@ export type RouteResponse<T extends Route, M extends "GET" | "POST"> = M extends
         : never;
 
 // Root
-export type RouteRootGetParams = Record<never, never>;
 export type RouteRootGetResponse = {
   status: "OK";
 };
 
 // Session
-export type RouteSessionGetParams = Record<never, never>;
 export type RouteSessionGetResponse = {
   authenticated: boolean;
 };

@@ -6,6 +6,10 @@
   "license": "MIT",
   "author": "",
   "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./react": "./dist/react/index.js"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
