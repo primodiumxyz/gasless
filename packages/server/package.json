@@ -9,7 +9,7 @@
   "main": "dist/app.js",
   "types": "dist/app.d.ts",
   "bin": {
-    "gasless-server": "./dist/index.js"
+    "gasless-server": "./dist/cli.js"
   },
   "files": [
     "dist"
