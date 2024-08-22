@@ -23,5 +23,5 @@ const calderaSepolia: Chain = {
 
 export const chains: Record<string, Chain> = {
   calderaSepolia,
-  foundry,
+  dev: foundry,
 } as const;

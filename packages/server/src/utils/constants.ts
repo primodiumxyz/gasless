@@ -8,7 +8,6 @@ import { privateKeyToAccount } from "viem/accounts";
 
 import { chains } from "@/utils/chain";
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 config({ path: resolve(process.cwd(), ".env") });
 
 export const DEV = process.env.NODE_ENV === "development";
