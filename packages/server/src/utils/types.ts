@@ -54,21 +54,37 @@ export type Route = "/" | "/call" | "/session";
 export type GetRoute = Extract<Route, "/" | "/session">;
 export type PostRoute = Extract<Route, "/call" | "/session">;
 
-export type RouteParams<T extends Route> = T extends "/"
-  ? RouteRootGetParams
-  : T extends "/call"
-    ? RouteCallPostParams
-    : T extends "/session"
-      ? RouteSessionPostParams
-      : never;
+export type RouteParams<T extends Route, M extends "GET" | "POST"> = M extends "GET"
+  ? T extends "/"
+    ? RouteRootGetParams
+    : T extends "/call"
+      ? never
+      : T extends "/session"
+        ? RouteSessionGetParams
+        : never
+  : T extends "/"
+    ? never
+    : T extends "/call"
+      ? RouteCallPostParams
+      : T extends "/session"
+        ? RouteSessionPostParams
+        : never;
 
-export type RouteResponse<T extends Route> = T extends "/"
-  ? RouteRootGetResponse
-  : T extends "/call"
-    ? RouteCallPostResponse
-    : T extends "/session"
-      ? RouteSessionPostResponse
-      : never;
+export type RouteResponse<T extends Route, M extends "GET" | "POST"> = M extends "GET"
+  ? T extends "/"
+    ? RouteRootGetResponse
+    : T extends "/call"
+      ? never
+      : T extends "/session"
+        ? RouteSessionGetResponse
+        : never
+  : T extends "/"
+    ? never
+    : T extends "/call"
+      ? RouteCallPostResponse
+      : T extends "/session"
+        ? RouteSessionPostResponse
+        : never;
 
 // Root
 export type RouteRootGetParams = Record<never, never>;
