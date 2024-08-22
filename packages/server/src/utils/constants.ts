@@ -17,7 +17,7 @@ export const TEST = process.env.NODE_ENV === "test";
 export const SESSION_SECRET =
   process.env.GASLESS_SERVER_SESSION_SECRET ?? "pqu3QS3OUB9tIiWntAEI7PkaIfp2H73Me2Lqq340FXc2";
 export const PORT = parseInt(process.env.GASLESS_SERVER_PORT ?? "3000");
-export const CHAIN = process.env.GASLESS_SERVER_CHAIN ?? "foundry";
+export const CHAIN = process.env.GASLESS_SERVER_CHAIN ?? "dev";
 
 export const SERVER_ACCOUNT = privateKeyToAccount(
   (process.env.GASLESS_SERVER_PRIVATE_KEY ??
