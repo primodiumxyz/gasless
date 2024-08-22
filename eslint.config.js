@@ -10,5 +10,5 @@ export default tseslint.config(eslint.configs.recommended, ...tseslint.configs.r
   rules: {
     "@typescript-eslint/require-await": "off",
   },
-  ignores: ["vite.config.ts", "**/dist/**"],
+  ignores: ["**/dist/**", "vite.config.ts"],
 });
