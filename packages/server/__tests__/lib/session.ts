@@ -3,7 +3,7 @@ import { Chain, encodeFunctionData, HttpTransport, PrivateKeyAccount, WalletClie
 import { expect } from "vitest";
 
 import { Abi } from "@/utils/abi";
-import { TIMEBOUND_DELEGATION, UNLIMITED_DELEGATION, WALLET } from "@/utils/constants";
+import { SERVER_WALLET, TIMEBOUND_DELEGATION, UNLIMITED_DELEGATION } from "@/utils/constants";
 import { getSystemId } from "@tests/lib/common";
 import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS } from "@tests/lib/constants";
 import { fetchSignatureNonce } from "@tests/lib/fetch";
@@ -18,13 +18,13 @@ export async function loginUser<T extends WalletClient<HttpTransport, Chain, Pri
     abi: TEST_WORLD_ABI,
     functionName: "registerDelegation",
     args: [
-      WALLET.account.address,
+      SERVER_WALLET.account.address,
       sessionLength ? TIMEBOUND_DELEGATION : UNLIMITED_DELEGATION,
       sessionLength
         ? encodeFunctionData({
             abi: Abi,
             functionName: "initDelegation",
-            args: [WALLET.account.address, BigInt(Math.floor(Date.now() / 1000) + sessionLength)],
+            args: [SERVER_WALLET.account.address, BigInt(Math.floor(Date.now() / 1000) + sessionLength)],
           })
         : "0x",
     ],

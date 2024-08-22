@@ -24,7 +24,7 @@ export const SERVER_ACCOUNT = privateKeyToAccount(
   (process.env.GASLESS_SERVER_PRIVATE_KEY ??
     "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80") as Hex,
 );
-export const WALLET = createWalletClient({
+export const SERVER_WALLET = createWalletClient({
   account: SERVER_ACCOUNT,
   transport: http(),
   chain: chains[CHAIN],

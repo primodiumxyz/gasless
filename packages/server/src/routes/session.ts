@@ -5,7 +5,7 @@ import { Address, decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
 import { chains } from "@/utils/chain";
-import { CHAIN, SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION, WALLET } from "@/utils/constants";
+import { CHAIN, SERVER_WALLET, SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@/utils/constants";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function (request) {
@@ -51,18 +51,18 @@ export default async function (fastify: FastifyInstance) {
       const worldContract = getContract({
         address: worldAddress,
         abi: Abi,
-        client: WALLET,
+        client: SERVER_WALLET,
       });
 
       const hash = await fastify.TransactionManager.queueTx(
         async () =>
           await worldContract.write.callWithSignature([address, systemId, callData, signature], {
-            account: WALLET.account,
+            account: SERVER_WALLET.account,
             chain: chains[CHAIN],
           }),
       );
 
-      const receipt = await WALLET.waitForTransactionReceipt({
+      const receipt = await SERVER_WALLET.waitForTransactionReceipt({
         hash,
       });
 
@@ -97,7 +97,7 @@ export default async function (fastify: FastifyInstance) {
       const worldContract = getContract({
         address: request.session.worldAddress,
         abi: Abi,
-        client: WALLET,
+        client: SERVER_WALLET,
       });
 
       if (!request.session.address) {
@@ -107,12 +107,12 @@ export default async function (fastify: FastifyInstance) {
       const hash = await fastify.TransactionManager.queueTx(
         async () =>
           await worldContract.write.unregisterDelegation([request.session.address!], {
-            account: WALLET.account,
+            account: SERVER_WALLET.account,
             chain: chains[CHAIN],
           }),
       );
 
-      const receipt = await WALLET.waitForTransactionReceipt({
+      const receipt = await SERVER_WALLET.waitForTransactionReceipt({
         hash,
       });
 

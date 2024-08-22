@@ -10,6 +10,8 @@ import { DEV, PORT } from "@/utils/constants";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+export * from "@/routes/types";
+
 /**
  * Asynchronously builds the application by registering plugins and routes.
  *

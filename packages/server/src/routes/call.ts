@@ -5,7 +5,7 @@ import { Address, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
 import { chains } from "@/utils/chain";
-import { CHAIN, WALLET } from "@/utils/constants";
+import { CHAIN, SERVER_WALLET } from "@/utils/constants";
 
 export default async function (fastify: FastifyInstance) {
   fastify.post("/", async function (request, response) {
@@ -26,13 +26,13 @@ export default async function (fastify: FastifyInstance) {
       const worldContract = getContract({
         address: worldAddress,
         abi: Abi,
-        client: WALLET,
+        client: SERVER_WALLET,
       });
 
       const hash = await fastify.TransactionManager.queueTx(
         async () =>
           await worldContract.write.callFrom([from, delegationControlId, callData], {
-            account: WALLET.account,
+            account: SERVER_WALLET.account,
             chain: chains[CHAIN],
           }),
       );
