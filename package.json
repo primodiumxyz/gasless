@@ -1,5 +1,5 @@
 {
-  "name": "gaseless-server",
+  "name": "gasless-server",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -8,19 +8,19 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm -filter server build",
+    "build": "pnpm -filter @primodiumxyz/gasless-server build",
     "deploy:contracts:local": "pnpm -filter contracts deploy:local",
     "dev": "pnpm -r dev",
     "dev:contracts": "pnpm -filter contracts dev",
     "dev:node": "pnpm -filter contracts devnode",
-    "dev:server": "pnpm -filter server dev",
+    "dev:server": "pnpm -filter @primodiumxyz/gasless-server dev",
     "lint": "pnpm eslint --cache --fix . --ignore-pattern '**/dist/**'",
     "prepare": "husky && husky install",
     "sort-package-json": "npx sort-package-json package.json 'packages/*/package.json'",
     "test": "pnpm -r test",
-    "test:server": "pnpm -filter server test",
-    "test:server:ui": "pnpm -filter server test:ui",
-    "test:server:watch": "pnpm -filter server test:watch",
+    "test:server": "pnpm -filter @primodiumxyz/gasless-server test",
+    "test:server:ui": "pnpm -filter @primodiumxyz/gasless-server test:ui",
+    "test:server:watch": "pnpm -filter @primodiumxyz/gasless-server test:watch",
     "test:watch": "pnpm -r test:watch"
   },
   "lint-staged": {
