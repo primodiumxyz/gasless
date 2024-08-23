@@ -54,17 +54,19 @@ export type Route = "/" | "/call" | "/session";
 export type GetRoute = Extract<Route, "/" | "/session">;
 export type PostRoute = Extract<Route, "/call" | "/session">;
 
-export type RouteParams<T extends Route, M extends "GET" | "POST"> = M extends "GET"
+export type RouteParams<T extends Route, M extends "GET" | "POST" | "DELETE"> = M extends "GET"
   ? never
-  : T extends "/"
+  : M extends "DELETE"
     ? never
-    : T extends "/call"
-      ? RouteCallPostParams
-      : T extends "/session"
-        ? RouteSessionPostParams
-        : never;
+    : T extends "/"
+      ? never
+      : T extends "/call"
+        ? RouteCallPostParams
+        : T extends "/session"
+          ? RouteSessionPostParams
+          : never;
 
-export type RouteResponse<T extends Route, M extends "GET" | "POST"> = M extends "GET"
+export type RouteResponse<T extends Route, M extends "GET" | "POST" | "DELETE"> = M extends "GET"
   ? T extends "/"
     ? RouteRootGetResponse
     : T extends "/call"
@@ -72,13 +74,17 @@ export type RouteResponse<T extends Route, M extends "GET" | "POST"> = M extends
       : T extends "/session"
         ? RouteSessionGetResponse
         : never
-  : T extends "/"
-    ? never
-    : T extends "/call"
-      ? RouteCallPostResponse
-      : T extends "/session"
-        ? RouteSessionPostResponse
-        : never;
+  : M extends "POST"
+    ? T extends "/"
+      ? never
+      : T extends "/call"
+        ? RouteCallPostResponse
+        : T extends "/session"
+          ? RouteSessionPostResponse
+          : never
+    : T extends "/session"
+      ? RouteSessionDeleteResponse
+      : never;
 
 export type BadResponse = {
   statusCode: 400;
@@ -94,6 +100,9 @@ export type RouteRootGetResponse = {
 // Session
 export type RouteSessionGetResponse = {
   authenticated: boolean;
+};
+export type RouteSessionDeleteResponse = {
+  authenticated: false;
 };
 
 export type RouteSessionPostParams = {
