@@ -51,6 +51,7 @@ export type DelegationAbiType = [
 /* --------------------------------- Routes --------------------------------- */
 
 export type Route = "/" | "/call" | "/session";
+export type DeleteRoute = Extract<Route, "/session">;
 export type GetRoute = Extract<Route, "/" | "/session">;
 export type PostRoute = Extract<Route, "/call" | "/session">;
 export type Method = "GET" | "POST" | "DELETE";
