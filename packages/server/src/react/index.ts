@@ -1,2 +1,2 @@
 export * from "@/react/constants";
-export type { Route, GetRoute, PostRoute, RouteParams, RouteResponse, BadResponse } from "@/utils/types";
+export type { Method, Route, GetRoute, PostRoute, RouteParams, RouteResponse, BadResponse } from "@/utils/types";

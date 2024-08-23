@@ -53,8 +53,9 @@ export type DelegationAbiType = [
 export type Route = "/" | "/call" | "/session";
 export type GetRoute = Extract<Route, "/" | "/session">;
 export type PostRoute = Extract<Route, "/call" | "/session">;
+export type Method = "GET" | "POST" | "DELETE";
 
-export type RouteParams<T extends Route, M extends "GET" | "POST" | "DELETE"> = M extends "GET"
+export type RouteParams<T extends Route, M extends Method> = M extends "GET"
   ? never
   : M extends "DELETE"
     ? never
@@ -66,7 +67,7 @@ export type RouteParams<T extends Route, M extends "GET" | "POST" | "DELETE"> = 
           ? RouteSessionPostParams
           : never;
 
-export type RouteResponse<T extends Route, M extends "GET" | "POST" | "DELETE"> = M extends "GET"
+export type RouteResponse<T extends Route, M extends Method> = M extends "GET"
   ? T extends "/"
     ? RouteRootGetResponse
     : T extends "/call"
