@@ -2,10 +2,10 @@ import fastifyCors from "@fastify/cors";
 import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 
-import { DEV } from "@/utils/constants";
+import { DEV, TEST } from "@/utils/constants";
 
 export default fp(async function (fastify: FastifyInstance) {
-  const allowedOrigins = DEV ? true : process.env.ALLOWED_ORIGINS?.split(",");
+  const allowedOrigins = DEV || TEST ? true : process.env.ALLOWED_ORIGINS?.split(",");
   fastify
     .register(fastifyCors, {
       origin: allowedOrigins,

@@ -80,6 +80,12 @@ export type RouteResponse<T extends Route, M extends "GET" | "POST"> = M extends
         ? RouteSessionPostResponse
         : never;
 
+export type BadResponse = {
+  statusCode: 400;
+  error: "Bad Request";
+  message: string;
+};
+
 // Root
 export type RouteRootGetResponse = {
   status: "OK";
@@ -95,14 +101,10 @@ export type RouteSessionPostParams = {
   worldAddress: Address;
   params: [systemId: Hex, callData: Hex, signature: Hex];
 };
-export type RouteSessionPostResponse =
-  | {
-      authenticated: false;
-    }
-  | {
-      authenticated: true;
-      txHash: Hex;
-    };
+export type RouteSessionPostResponse = {
+  authenticated: true;
+  txHash: Hex;
+};
 
 // Call
 export type RouteCallPostParams = {

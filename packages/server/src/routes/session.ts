@@ -34,6 +34,7 @@ export default async function (fastify: FastifyInstance) {
         data: callData,
       });
 
+      // TODO(gasless): pass delegation ids since it might be different because of namespace
       if (delegationControlId === SYSTEMBOUND_DELEGATION) {
         return reply.badRequest("Systembound delegation is not supported yet.");
       }
@@ -59,6 +60,7 @@ export default async function (fastify: FastifyInstance) {
           await worldContract.write.callWithSignature([address, systemId, callData, signature], {
             account: SERVER_WALLET.account,
             chain: chains[CHAIN],
+            gas: 1_000_000n,
           }),
       );
 
