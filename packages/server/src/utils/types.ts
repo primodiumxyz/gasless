@@ -110,6 +110,7 @@ export type RouteSessionPostResponse = {
 export type RouteCallPostParams = {
   worldAddress: Address;
   params: [from: Address, delegationControlId: Hex, callData: Hex];
+  options?: { gas?: string; value?: string };
 };
 export type RouteCallPostResponse = {
   txHash: Hex;

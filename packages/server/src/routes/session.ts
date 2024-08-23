@@ -1,11 +1,12 @@
 "use strict";
 
 import { FastifyInstance } from "fastify";
-import { Address, decodeFunctionData, getContract, Hex } from "viem";
+import { decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
 import { chains } from "@/utils/chain";
 import { CHAIN, SERVER_WALLET, SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@/utils/constants";
+import { RouteSessionPostParams } from "@/utils/types";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function (request) {
@@ -19,11 +20,7 @@ export default async function (fastify: FastifyInstance) {
       address,
       worldAddress,
       params: [systemId, callData, signature],
-    } = request.body as {
-      address: Address;
-      worldAddress: Address;
-      params: [systemId: Hex, callData: Hex, signature: Hex];
-    };
+    } = request.body as RouteSessionPostParams;
 
     try {
       //check delegation type since we only support unlimited and timebound. Also will need to update user session to match delegation expiration

@@ -1,11 +1,12 @@
 "use strict";
 
 import { FastifyInstance } from "fastify";
-import { Address, getContract, Hex } from "viem";
+import { getContract } from "viem";
 
 import { Abi } from "@/utils/abi";
 import { chains } from "@/utils/chain";
 import { CHAIN, SERVER_WALLET } from "@/utils/constants";
+import { RouteCallPostParams } from "@/utils/types";
 
 export default async function (fastify: FastifyInstance) {
   fastify.post("/", async function (request, response) {
@@ -18,10 +19,8 @@ export default async function (fastify: FastifyInstance) {
       const {
         worldAddress,
         params: [from, delegationControlId, callData],
-      } = request.body as {
-        worldAddress: Address;
-        params: [from: Address, delegationControlId: Hex, callData: Hex];
-      };
+        options,
+      } = request.body as RouteCallPostParams;
 
       const worldContract = getContract({
         address: worldAddress,
@@ -34,6 +33,8 @@ export default async function (fastify: FastifyInstance) {
           await worldContract.write.callFrom([from, delegationControlId, callData], {
             account: SERVER_WALLET.account,
             chain: chains[CHAIN],
+            gas: options?.gas ? BigInt(options.gas) : undefined,
+            value: options?.value ? BigInt(options.value) : BigInt(0),
           }),
       );
 
