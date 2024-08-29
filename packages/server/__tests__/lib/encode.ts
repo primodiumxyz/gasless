@@ -45,6 +45,27 @@ export async function encodeFunctionData<
   return concatHex([selector, data ?? "0x"]);
 }
 
+/** Encode a system call to be passed as arguments into `World.call` */
+export async function encodeSystemCall<
+  abi extends Abi | readonly unknown[] = Abi | readonly unknown[],
+  functionName extends ContractFunctionName<abi> | undefined = undefined,
+>(
+  parameters: EncodeFunctionDataParameters<abi, functionName> & { readonly systemId: Hex },
+): Promise<AbiParametersToPrimitiveTypes<ExtractAbiFunction<typeof BaseAbi, "call">["inputs"]>> {
+  const { abi, args, functionName, systemId } = parameters as EncodeFunctionDataParameters & {
+    readonly systemId: Hex;
+  };
+
+  return [
+    systemId,
+    await encodeFunctionData({
+      abi,
+      functionName,
+      args,
+    }),
+  ];
+}
+
 /** Encode a system call to be passed as arguments into `World.callFrom` */
 export async function encodeSystemCallFrom<
   abi extends Abi | readonly unknown[] = Abi | readonly unknown[],
@@ -57,13 +78,5 @@ export async function encodeSystemCallFrom<
     readonly from: Address;
   };
 
-  return [
-    from,
-    systemId,
-    await encodeFunctionData({
-      abi,
-      functionName,
-      args,
-    }),
-  ];
+  return [from, ...(await encodeSystemCall({ abi, args, functionName, systemId }))];
 }

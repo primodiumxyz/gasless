@@ -49,6 +49,10 @@ contract TestSystem is System {
     Inventory.setTotalWeight(entityKey, totalWeight);
   }
 
+  function deposit() public payable {
+    require(_msgValue() >= 1 ether, "Deposit amount is less than the minimum deposit");
+  }
+
   /* ---------------------------------- UTILS --------------------------------- */
   function _addressToEntityKey(address addr) internal pure returns (bytes32 key) {
     key = bytes32(uint256(uint160(addr)));

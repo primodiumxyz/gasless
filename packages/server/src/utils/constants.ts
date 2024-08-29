@@ -27,6 +27,7 @@ export const SERVER_WALLET = createWalletClient({
   account: SERVER_ACCOUNT,
   transport: http(),
   chain: chains[CHAIN],
+  pollingInterval: 1_000,
 }).extend(publicActions);
 
 export const REDIS = PROD ? new Redis() : new RedisMock();

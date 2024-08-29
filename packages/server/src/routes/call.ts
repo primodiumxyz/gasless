@@ -34,7 +34,6 @@ export default async function (fastify: FastifyInstance) {
             account: SERVER_WALLET.account,
             chain: chains[CHAIN],
             gas: options?.gas ? BigInt(options.gas) : undefined,
-            value: options?.value ? BigInt(options.value) : BigInt(0),
           }),
       );
 

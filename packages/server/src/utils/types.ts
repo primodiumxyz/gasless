@@ -1,4 +1,4 @@
-import { Address, Hex } from "viem";
+import { Address, Hex, SerializeSignatureReturnType } from "viem";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -53,7 +53,7 @@ export type DelegationAbiType = [
 export type Route = "/" | "/call" | "/session";
 export type DeleteRoute = Extract<Route, "/session">;
 export type GetRoute = Extract<Route, "/" | "/session">;
-export type PostRoute = Extract<Route, "/call" | "/session">;
+export type PostRoute = Extract<Route, "/call" | "/session" | "/signedCall">;
 export type Method = "GET" | "POST" | "DELETE";
 
 export type RouteParams<T extends Route, M extends Method> = M extends "GET"
@@ -66,7 +66,9 @@ export type RouteParams<T extends Route, M extends Method> = M extends "GET"
         ? RouteCallPostParams
         : T extends "/session"
           ? RouteSessionPostParams
-          : never;
+          : T extends "/signedCall"
+            ? RouteSignedCallPostParams
+            : never;
 
 export type RouteResponse<T extends Route, M extends Method> = M extends "GET"
   ? T extends "/"
@@ -75,7 +77,9 @@ export type RouteResponse<T extends Route, M extends Method> = M extends "GET"
       ? never
       : T extends "/session"
         ? RouteSessionGetResponse
-        : never
+        : T extends "/signedCall"
+          ? never
+          : never
   : M extends "POST"
     ? T extends "/"
       ? never
@@ -83,7 +87,9 @@ export type RouteResponse<T extends Route, M extends Method> = M extends "GET"
         ? RouteCallPostResponse
         : T extends "/session"
           ? RouteSessionPostResponse
-          : never
+          : T extends "/signedCall"
+            ? RouteSignedCallPostResponse
+            : never
     : T extends "/session"
       ? RouteSessionDeleteResponse
       : never;
@@ -121,8 +127,18 @@ export type RouteSessionPostResponse = {
 export type RouteCallPostParams = {
   worldAddress: Address;
   params: [from: Address, delegationControlId: Hex, callData: Hex];
-  options?: { gas?: string; value?: string };
+  options?: { gas?: string };
 };
 export type RouteCallPostResponse = {
+  txHash: Hex;
+};
+
+// Signed Call
+export type RouteSignedCallPostParams = {
+  worldAddress: Address;
+  address: Address;
+  signature: SerializeSignatureReturnType;
+};
+export type RouteSignedCallPostResponse = {
   txHash: Hex;
 };
