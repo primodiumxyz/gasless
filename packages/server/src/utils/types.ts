@@ -50,7 +50,7 @@ export type DelegationAbiType = [
 
 /* --------------------------------- Routes --------------------------------- */
 
-export type Route = "/" | "/call" | "/session";
+export type Route = "/" | "/call" | "/session" | "/signedCall";
 export type DeleteRoute = Extract<Route, "/session">;
 export type GetRoute = Extract<Route, "/" | "/session">;
 export type PostRoute = Extract<Route, "/call" | "/session" | "/signedCall">;
@@ -135,8 +135,6 @@ export type RouteCallPostResponse = {
 
 // Signed Call
 export type RouteSignedCallPostParams = {
-  worldAddress: Address;
-  address: Address;
   signature: SerializeSignatureReturnType;
 };
 export type RouteSignedCallPostResponse = {
