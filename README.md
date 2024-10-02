@@ -4,7 +4,7 @@ Server and client libraries for creating a gasless server with [MUD-compliant](h
 
 # Getting Started
 
-The smart contract toolkits in this repository is based on the [Foundry toolkit](https://github.com/foundry-rs/foundry). [Anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil) is the local Ethereum development node.
+The smart contract toolkits in this repository is based on the [Foundry toolkit](https://github.com/foundry-rs/foundry), with [Anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil) as the local Ethereum development node.
 
 ## Running a local gasless server:
 
