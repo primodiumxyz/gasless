@@ -1,4 +1,4 @@
-export { SERVER_WALLET, TIMEBOUND_DELEGATION, UNLIMITED_DELEGATION } from "@/utils/constants";
+export * from "@/react/constants";
 export type {
   Method,
   Route,

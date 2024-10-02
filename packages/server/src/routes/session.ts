@@ -1,11 +1,12 @@
 "use strict";
 
 import { FastifyInstance } from "fastify";
-import { Address, decodeFunctionData, getContract, Hex } from "viem";
+import { decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
-import { WALLET } from "@/utils/constants";
-import { SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@tests/lib/constants";
+import { chains } from "@/utils/chain";
+import { CHAIN, SERVER_WALLET, SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@/utils/constants";
+import { RouteSessionPostParams } from "@/utils/types";
 
 export default async function (fastify: FastifyInstance) {
   fastify.get("/", async function (request) {
@@ -19,11 +20,7 @@ export default async function (fastify: FastifyInstance) {
       address,
       worldAddress,
       params: [systemId, callData, signature],
-    } = request.body as {
-      address: Address;
-      worldAddress: Address;
-      params: [systemId: Hex, callData: Hex, signature: Hex];
-    };
+    } = request.body as RouteSessionPostParams;
 
     try {
       //check delegation type since we only support unlimited and timebound. Also will need to update user session to match delegation expiration
@@ -34,6 +31,7 @@ export default async function (fastify: FastifyInstance) {
         data: callData,
       });
 
+      // TODO(gasless): pass delegation ids since it might be different because of namespace
       if (delegationControlId === SYSTEMBOUND_DELEGATION) {
         return reply.badRequest("Systembound delegation is not supported yet.");
       }
@@ -51,14 +49,19 @@ export default async function (fastify: FastifyInstance) {
       const worldContract = getContract({
         address: worldAddress,
         abi: Abi,
-        client: WALLET,
+        client: SERVER_WALLET,
       });
 
       const hash = await fastify.TransactionManager.queueTx(
-        async () => await worldContract.write.callWithSignature([address, systemId, callData, signature]),
+        async () =>
+          await worldContract.write.callWithSignature([address, systemId, callData, signature], {
+            account: SERVER_WALLET.account,
+            chain: chains[CHAIN],
+            gas: 1_000_000n,
+          }),
       );
 
-      const receipt = await WALLET.waitForTransactionReceipt({
+      const receipt = await SERVER_WALLET.waitForTransactionReceipt({
         hash,
       });
 
@@ -93,7 +96,7 @@ export default async function (fastify: FastifyInstance) {
       const worldContract = getContract({
         address: request.session.worldAddress,
         abi: Abi,
-        client: WALLET,
+        client: SERVER_WALLET,
       });
 
       if (!request.session.address) {
@@ -101,10 +104,14 @@ export default async function (fastify: FastifyInstance) {
       }
 
       const hash = await fastify.TransactionManager.queueTx(
-        async () => await worldContract.write.unregisterDelegation([request.session.address!]),
+        async () =>
+          await worldContract.write.unregisterDelegation([request.session.address!], {
+            account: SERVER_WALLET.account,
+            chain: chains[CHAIN],
+          }),
       );
 
-      const receipt = await WALLET.waitForTransactionReceipt({
+      const receipt = await SERVER_WALLET.waitForTransactionReceipt({
         hash,
       });
 

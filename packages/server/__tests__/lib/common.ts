@@ -19,12 +19,12 @@ export function sleep(ms: number) {
 }
 
 export function createUserWallet() {
-  const privateKey = generatePrivateKey();
-  const account = privateKeyToAccount(privateKey);
+  const account = privateKeyToAccount(generatePrivateKey());
   const walletClient = createWalletClient({
     account,
     transport: http(),
     chain: foundry,
+    pollingInterval: 1_000,
   }).extend(publicActions);
 
   return walletClient;

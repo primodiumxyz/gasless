@@ -1,6 +1,7 @@
 import { Chain } from "viem";
+import { foundry } from "viem/chains";
 
-export const calderaSepolia: Chain = {
+const calderaSepolia: Chain = {
   name: "Caldera Sepolia",
   id: 10017,
   nativeCurrency: { decimals: 18, name: "Ether", symbol: "ETH" },
@@ -19,3 +20,8 @@ export const calderaSepolia: Chain = {
     },
   },
 };
+
+export const chains: Record<string, Chain> = {
+  calderaSepolia,
+  dev: foundry,
+} as const;

@@ -1,8 +1,8 @@
-import TimeboundDelegationControl from "@latticexyz/world-modules/out/TimeboundDelegationControl.sol/TimeboundDelegationControl.abi.json";
+import TimeboundDelegationControl from "@latticexyz/world-modules/out/TimeboundDelegationControl.sol/TimeboundDelegationControl.abi.json" with { type: "json" };
 import type TimeboundDelegationControlType from "@latticexyz/world-modules/out/TimeboundDelegationControl.sol/TimeboundDelegationControl.abi.json.d.ts";
-import CallWithSignatureAbi from "@latticexyz/world-modules/out/Unstable_CallWithSignatureSystem.sol/Unstable_CallWithSignatureSystem.abi.json";
+import CallWithSignatureAbi from "@latticexyz/world-modules/out/Unstable_CallWithSignatureSystem.sol/Unstable_CallWithSignatureSystem.abi.json" with { type: "json" };
 import type CallWithSignatureAbiType from "@latticexyz/world-modules/out/Unstable_CallWithSignatureSystem.sol/Unstable_CallWithSignatureSystem.abi.json.d.ts";
-import World from "@latticexyz/world-modules/out/World.sol/World.abi.json";
+import World from "@latticexyz/world-modules/out/World.sol/World.abi.json" with { type: "json" };
 import type WorldType from "@latticexyz/world-modules/out/World.sol/World.abi.json.d.ts";
 
 import { DelegationAbiType } from "@/utils/types";
