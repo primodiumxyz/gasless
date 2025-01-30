@@ -1,0 +1,30 @@
+{
+  "systems": [
+    {
+      "namespaceLabel": "",
+      "label": "TestSystem",
+      "namespace": "",
+      "name": "TestSystem",
+      "systemId": "0x737900000000000000000000000000005465737453797374656d000000000000",
+      "abi": [
+        "error ITEMS_LENGTH_MISMATCH()",
+        "function deposit() payable",
+        "function increment()",
+        "function move(int32 x, int32 y)",
+        "function moveWithArbitraryKey(bytes32 entityKey, int32 x, int32 y)",
+        "function setItems(uint32[] ids, uint32[] weights, uint256 totalWeight)",
+        "function storeItems(uint32[] ids, uint32[] weights)"
+      ],
+      "worldAbi": [
+        "error ITEMS_LENGTH_MISMATCH()",
+        "function deposit() payable",
+        "function increment()",
+        "function move(int32 x, int32 y)",
+        "function moveWithArbitraryKey(bytes32 entityKey, int32 x, int32 y)",
+        "function setItems(uint32[] ids, uint32[] weights, uint256 totalWeight)",
+        "function storeItems(uint32[] ids, uint32[] weights)"
+      ]
+    }
+  ],
+  "createdAt": 1738274932553
+}

@@ -152,6 +152,13 @@ declare const abi: [
   },
   {
     type: "function";
+    name: "deposit";
+    inputs: [];
+    outputs: [];
+    stateMutability: "payable";
+  },
+  {
+    type: "function";
     name: "getDynamicField";
     inputs: [
       {
@@ -2100,4 +2107,5 @@ declare const abi: [
     inputs: [];
   },
 ];
+
 export default abi;
