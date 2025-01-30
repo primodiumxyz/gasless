@@ -12,3 +12,4 @@ broadcast/
 deploys/**/*.json
 # and build artifacts
 src/codegen/
+.mud
