@@ -1,10 +1,12 @@
 {
-  "name": "gasless-server",
+  "name": "@primodiumxyz/gasless",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "A server stack for creating a gasless server with MUD-compliant Ethereum smart contracts.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/primodiumxyz/gasless"
+  },
   "license": "MIT",
-  "author": "",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -34,7 +36,8 @@
     "eslint": "^9.6.0",
     "husky": ">=6",
     "lint-staged": ">=10",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
+    "prettier-plugin-jsdoc": "^1.3.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.0"
   }
