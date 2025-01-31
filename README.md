@@ -97,7 +97,7 @@ To run tests, first deploy the test contracts:
 # Add the Anvil private key to `packages/test-contracts/.env`
 echo "PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" > packages/test-contracts/.env
 
-# Run the Anvil development node and deploy contracts
+# Run the Anvil development node, deploy contracts, and start the server
 pnpm run dev
 ```
 

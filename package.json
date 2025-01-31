@@ -12,7 +12,7 @@
   "scripts": {
     "build": "pnpm -filter @primodiumxyz/gasless-server build",
     "deploy:contracts:local": "pnpm -filter contracts deploy:local",
-    "dev": "pnpm -r dev",
+    "dev": "run-pty % pnpm dev:contracts % pnpm dev:server",
     "dev:contracts": "pnpm -filter contracts dev",
     "dev:node": "pnpm -filter contracts devnode",
     "dev:server": "pnpm -filter @primodiumxyz/gasless-server dev",
@@ -38,6 +38,7 @@
     "lint-staged": ">=10",
     "prettier": "^3.3.3",
     "prettier-plugin-jsdoc": "^1.3.2",
+    "run-pty": "^5.0.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.0"
   }
