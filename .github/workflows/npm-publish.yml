@@ -29,4 +29,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm --filter @primodiumxyz/gasless-server exec -- npx --no-install semantic-release --branches main
+        working-directory: packages/server
+        run: npx --package semantic-release --package semantic-release-monorepo semantic-release --branches main
