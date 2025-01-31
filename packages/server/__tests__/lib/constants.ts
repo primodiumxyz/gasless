@@ -10,6 +10,7 @@ import worlds from "../../../test-contracts/worlds.json";
 export const CHAIN_ID = 31337;
 export const TEST_WORLD_ABI = testContractsAbi as typeof testContractsAbiType;
 export const TEST_WORLD_ADDRESS = worlds[CHAIN_ID].address as Address;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 export const TEST_MUD_CONFIG = testConfig;
 export const TEST_WORLD_CONTRACT = getContract({
   address: TEST_WORLD_ADDRESS,

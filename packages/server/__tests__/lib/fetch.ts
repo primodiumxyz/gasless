@@ -38,6 +38,7 @@ export async function fetchSignatureNonce(userAddress: Address) {
 
 export async function fetchUserPosition(userAddress: Address) {
   const res = await TEST_WORLD_CONTRACT.read.getRecord([
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     TEST_MUD_CONFIG.tables.Position.tableId,
     [padHex(userAddress, { size: 32, dir: "left" })],
   ]);
