@@ -4,7 +4,13 @@ import { Address, Hex, padHex } from "viem";
 import { TEST_MUD_CONFIG, TEST_WORLD_CONTRACT } from "@tests/lib/constants";
 import { CallWithSignatureNonces, FunctionSelectors } from "@tests/lib/tableDefs";
 
-export async function fetchSystemFunctionSelector(rawSelector: Hex) {
+/**
+ * Fetch the system function selector for a given raw selector.
+ *
+ * @param rawSelector - The raw selector
+ * @returns {Promise<Hex>} - The system function selector
+ */
+export async function fetchSystemFunctionSelector(rawSelector: Hex): Promise<Hex> {
   const res = await TEST_WORLD_CONTRACT.read.getRecord([
     FunctionSelectors.tableId,
     [padHex(rawSelector, { size: 32, dir: "right" })],
@@ -23,7 +29,13 @@ export async function fetchSystemFunctionSelector(rawSelector: Hex) {
   return signature;
 }
 
-export async function fetchSignatureNonce(userAddress: Address) {
+/**
+ * Fetch the nonce for a given user address.
+ *
+ * @param userAddress - The address of the user
+ * @returns {Promise<bigint>} - The signature nonce
+ */
+export async function fetchSignatureNonce(userAddress: Address): Promise<bigint> {
   const res = await TEST_WORLD_CONTRACT.read.getRecord([
     CallWithSignatureNonces.tableId,
     [padHex(userAddress, { size: 32, dir: "left" })],
@@ -36,7 +48,18 @@ export async function fetchSignatureNonce(userAddress: Address) {
   }).nonce;
 }
 
-export async function fetchUserPosition(userAddress: Address) {
+type Position = {
+  x: number;
+  y: number;
+};
+
+/**
+ * Fetch the position of a user.
+ *
+ * @param userAddress - The address of the user
+ * @returns {Promise<Position>} - The position of the user
+ */
+export async function fetchUserPosition(userAddress: Address): Promise<Position> {
   const res = await TEST_WORLD_CONTRACT.read.getRecord([
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     TEST_MUD_CONFIG.tables.Position.tableId,
@@ -44,7 +67,6 @@ export async function fetchUserPosition(userAddress: Address) {
   ]);
 
   return decodeValueArgs(
-    // TODO: find a better way to grab the schema from the mud config
     { x: "int32", y: "int32" },
     {
       staticData: res[0],

@@ -6,6 +6,7 @@ import fp from "fastify-plugin";
 
 import { PROD, REDIS } from "@/utils/constants";
 
+// Register the rate limit plugin
 export default fp(async function (fastify: FastifyInstance) {
   if (!PROD) return;
 

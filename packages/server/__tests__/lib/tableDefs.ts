@@ -4,6 +4,7 @@ const UserDelegationControlTableId = resourceToHex({ type: "table", namespace: "
 const CallWithSignatureNoncesTableId = resourceToHex({ type: "table", namespace: "", name: "CallWithSignatur" });
 const FunctionSelectorsTableId = resourceToHex({ type: "table", namespace: "world", name: "FunctionSelectors" });
 
+// UserDelegationControl schema
 export const UserDelegationControl = {
   namespace: "world",
   name: "UserDelegationControl",
@@ -16,6 +17,7 @@ export const UserDelegationControl = {
   key: ["delegator", "delegatee"],
 } as const;
 
+// CallWithSignatureNonces schema
 export const CallWithSignatureNonces = {
   namespace: "world",
   name: "CallWithSignatureNonces",
@@ -27,6 +29,7 @@ export const CallWithSignatureNonces = {
   },
 } as const;
 
+// FunctionSelectors schema
 export const FunctionSelectors = {
   name: "FunctionSelectors",
   namespace: "world",

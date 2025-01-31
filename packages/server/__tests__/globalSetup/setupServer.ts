@@ -1,8 +1,15 @@
 import { start } from "@/app";
 
+type TeardownFunction = () => Promise<void>;
+
 let teardownHappened = false;
 
-export async function setup() {
+/**
+ * Setup the server for testing.
+ *
+ * @returns {Promise<TeardownFunction>} - A function that will teardown the server
+ */
+export async function setup(): Promise<TeardownFunction> {
   console.log("⚡️ OPENING GASELESS SERVER \n");
 
   const app = await start();

@@ -4,6 +4,7 @@ import fp from "fastify-plugin";
 
 import { DEV, TEST } from "@/utils/constants";
 
+// Register the CORS plugin
 export default fp(async function (fastify: FastifyInstance) {
   const allowedOrigins = DEV || TEST ? true : process.env.ALLOWED_ORIGINS?.split(",");
   fastify
