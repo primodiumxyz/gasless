@@ -4,7 +4,6 @@ import { FastifyInstance } from "fastify";
 import { decodeFunctionData, getContract, Hex } from "viem";
 
 import { Abi } from "@/utils/abi";
-import { chains } from "@/utils/chain";
 import { CHAIN, SERVER_WALLET, SYSTEMBOUND_DELEGATION, TIMEBOUND_DELEGATION } from "@/utils/constants";
 import { RouteSessionPostParams } from "@/utils/types";
 
@@ -56,7 +55,7 @@ export default async function (fastify: FastifyInstance) {
         async () =>
           await worldContract.write.callWithSignature([address, systemId, callData, signature], {
             account: SERVER_WALLET.account,
-            chain: chains[CHAIN],
+            chain: CHAIN,
             gas: 1_000_000n,
           }),
       );
@@ -107,7 +106,7 @@ export default async function (fastify: FastifyInstance) {
         async () =>
           await worldContract.write.unregisterDelegation([request.session.address!], {
             account: SERVER_WALLET.account,
-            chain: chains[CHAIN],
+            chain: CHAIN,
           }),
       );
 

@@ -44,12 +44,12 @@ pnpm add @primodiumxyz/gasless-server
 
 Add the following environment variables to your `.env` file:
 
-| Variable                        | Description                                           | Default                                                              |
-| ------------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------- |
-| `GASLESS_SERVER_PRIVATE_KEY`    | Private key to use for the server wallet              | `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80` |
-| `GASLESS_SERVER_CHAIN`          | Chain to use (dev, calderaSepolia, or any viem chain) | `dev`                                                                |
-| `GASLESS_SERVER_PORT`           | Port to run the server on                             | `3000`                                                               |
-| `GASLESS_SERVER_SESSION_SECRET` | Fastify session secret                                | `pqu3QS3OUB9tIiWntAEI7PkaIfp2H73Me2Lqq340FXc2`                       |
+| Variable                        | Description                              | Default                                                              |
+| ------------------------------- | ---------------------------------------- | -------------------------------------------------------------------- |
+| `GASLESS_SERVER_PRIVATE_KEY`    | Private key to use for the server wallet | `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80` |
+| `GASLESS_SERVER_CHAIN`          | Chain to use (any viem chain)            | `foundry`                                                            |
+| `GASLESS_SERVER_PORT`           | Port to run the server on                | `3000`                                                               |
+| `GASLESS_SERVER_SESSION_SECRET` | Fastify session secret                   | `pqu3QS3OUB9tIiWntAEI7PkaIfp2H73Me2Lqq340FXc2`                       |
 
 2. Run
 

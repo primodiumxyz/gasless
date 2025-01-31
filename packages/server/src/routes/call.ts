@@ -4,7 +4,6 @@ import { FastifyInstance } from "fastify";
 import { getContract } from "viem";
 
 import { Abi } from "@/utils/abi";
-import { chains } from "@/utils/chain";
 import { CHAIN, SERVER_WALLET } from "@/utils/constants";
 import { RouteCallPostParams } from "@/utils/types";
 
@@ -32,7 +31,7 @@ export default async function (fastify: FastifyInstance) {
         async () =>
           await worldContract.write.callFrom([from, delegationControlId, callData], {
             account: SERVER_WALLET.account,
-            chain: chains[CHAIN],
+            chain: CHAIN,
             gas: options?.gas ? BigInt(options.gas) : undefined,
           }),
       );

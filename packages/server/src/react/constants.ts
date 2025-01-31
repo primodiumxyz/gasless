@@ -2,7 +2,7 @@ import { resourceToHex } from "@latticexyz/common";
 import { createWalletClient, Hex, http, publicActions } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 
-import { chains } from "@/utils/chain";
+import { ChainName, chains } from "@/utils/chain";
 
 declare global {
   interface ImportMeta {
@@ -13,12 +13,18 @@ declare global {
   }
 }
 
+// Validate the chain name
+const chainName = import.meta.env.GASLESS_SERVER_CHAIN ?? "foundry";
+if (!(chainName in chains)) {
+  throw new Error(`Invalid chain name: ${chainName}; this is not a chain supported by viem`);
+}
+
 /**
  * The viem chain to use for the server.
  *
  * Note: The chain is read from the environment.
  */
-export const CHAIN = import.meta.env.GASLESS_SERVER_CHAIN ?? "dev";
+export const CHAIN = chains[chainName as ChainName];
 
 /**
  * The account to use as the server's paymaster.
@@ -38,7 +44,7 @@ export const SERVER_ACCOUNT = privateKeyToAccount(
 export const SERVER_WALLET = createWalletClient({
   account: SERVER_ACCOUNT,
   transport: http(),
-  chain: chains[CHAIN],
+  chain: CHAIN,
 }).extend(publicActions);
 
 /** The resource to use for an unlimited delegation. */

@@ -2,7 +2,6 @@ import { parseEther } from "viem";
 import { expect, it } from "vitest";
 
 import { SERVER_WALLET } from "@/index";
-import { chains } from "@/utils/chain";
 import { CHAIN } from "@/utils/constants";
 import { createHttpAgent, createUserWallet, randomCoord } from "@tests/lib/common";
 import { TEST_WORLD_ADDRESS } from "@tests/lib/constants";
@@ -35,7 +34,7 @@ it("should be able to send value with a signed transaction", async () => {
 
   // Send the signed transaction to the server so it can submit it
   const fundHash = await SERVER_WALLET.sendTransaction({
-    chain: chains[CHAIN],
+    chain: CHAIN,
     account: SERVER_WALLET.account,
     to: user.account.address,
     value: minDeposit * 2n,

@@ -6,7 +6,7 @@ import RedisMock from "ioredis-mock";
 import { createWalletClient, Hex, http, publicActions } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 
-import { chains } from "@/utils/chain";
+import { ChainName, chains } from "@/utils/chain";
 
 config({ path: resolve(process.cwd(), ".env") });
 
@@ -46,12 +46,18 @@ export const SESSION_SECRET =
  */
 export const PORT = parseInt(process.env.GASLESS_SERVER_PORT ?? "3000");
 
+// Validate the chain name
+const chainName = process.env.GASLESS_SERVER_CHAIN ?? "foundry";
+if (!(chainName in chains)) {
+  throw new Error(`Invalid chain name: ${chainName}; this is not a chain supported by viem`);
+}
+
 /**
  * The chain to use for the server.
  *
  * Note: This is read from the environment.
  */
-export const CHAIN = process.env.GASLESS_SERVER_CHAIN ?? "dev";
+export const CHAIN = chains[chainName as ChainName];
 
 /**
  * The account to use as the server's paymaster.
@@ -71,7 +77,7 @@ export const SERVER_ACCOUNT = privateKeyToAccount(
 export const SERVER_WALLET = createWalletClient({
   account: SERVER_ACCOUNT,
   transport: http(),
-  chain: chains[CHAIN],
+  chain: CHAIN,
   pollingInterval: 1_000,
 }).extend(publicActions);
 
