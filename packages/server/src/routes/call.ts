@@ -7,6 +7,11 @@ import { Abi } from "@/utils/abi";
 import { CHAIN, SERVER_WALLET } from "@/utils/constants";
 import { RouteCallPostParams } from "@/utils/types";
 
+/**
+ * Registers the `call` route.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ */
 export default async function (fastify: FastifyInstance) {
   fastify.post("/", async function (request, response) {
     if (!request.session.authenticated) return response.unauthorized("Not authenticated");
