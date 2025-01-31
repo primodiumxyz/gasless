@@ -1,9 +1,21 @@
 {
-  "extends": "../../.tsconfigs/bundler/no-dom/library.json",
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
-    "baseUrl": ".",
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    "rootDir": "../../",
     "paths": {
       "@/*": ["./src/*"],
       "@tests/*": ["./__tests__/*"]
