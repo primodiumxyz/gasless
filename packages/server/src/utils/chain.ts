@@ -1,28 +1,11 @@
 import { Chain } from "viem";
 import * as _chains from "viem/chains";
 
-const calderaSepolia: Chain = {
-  name: "Caldera Sepolia",
-  id: 10017,
-  nativeCurrency: { decimals: 18, name: "Ether", symbol: "ETH" },
-  rpcUrls: {
-    default: {
-      http: ["https://primodium-sepolia.rpc.caldera.xyz/http"],
-    },
-    public: {
-      http: ["https://primodium-sepolia.rpc.caldera.xyz/http"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Blockscout",
-      url: "https://primodium-sepolia.explorer.caldera.xyz/",
-    },
-  },
-};
+// Chains supported by viem
+export const supportedChains = Object.keys(_chains) as (keyof typeof _chains)[];
 
-export const chains: Record<string, Chain> = {
-  calderaSepolia,
-  dev: _chains.foundry,
-  ..._chains,
-} as const;
+// Type alias for chain names
+export type ChainName = (typeof supportedChains)[number];
+
+// Map of chain names to chain objects
+export const chains: Record<ChainName, Chain> = _chains;

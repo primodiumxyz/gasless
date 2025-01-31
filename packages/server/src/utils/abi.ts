@@ -7,6 +7,7 @@ import type WorldType from "@latticexyz/world-modules/out/World.sol/World.abi.js
 
 import { DelegationAbiType } from "@/utils/types";
 
+/** The delegation ABI. */
 const DelegationAbi: DelegationAbiType = [
   {
     type: "function",
@@ -46,6 +47,7 @@ const DelegationAbi: DelegationAbiType = [
   },
 ] as const;
 
+/** The combined ABI for the server. */
 export const Abi = [...CallWithSignatureAbi, ...World, ...TimeboundDelegationControl, ...DelegationAbi] as
   | typeof CallWithSignatureAbiType
   | typeof WorldType

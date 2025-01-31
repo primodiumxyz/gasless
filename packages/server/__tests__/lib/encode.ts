@@ -14,6 +14,12 @@ import {
 import { Abi as BaseAbi } from "@/utils/abi";
 import { fetchSystemFunctionSelector } from "@tests/lib/fetch";
 
+/**
+ * Encode a function call to be passed as arguments into `World.call`
+ *
+ * @param parameters - The parameters for the function call
+ * @returns {Promise<EncodeFunctionDataReturnType>} - The encoded function data
+ */
 export async function encodeFunctionData<
   abi extends Abi | readonly unknown[] = Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi> | undefined = undefined,
@@ -45,7 +51,13 @@ export async function encodeFunctionData<
   return concatHex([selector, data ?? "0x"]);
 }
 
-/** Encode a system call to be passed as arguments into `World.call` */
+/**
+ * Encode a system call to be passed as arguments into `World.call`
+ *
+ * @param parameters - The parameters for the system call
+ * @returns {Promise<AbiParametersToPrimitiveTypes<ExtractAbiFunction<typeof BaseAbi, "call">["inputs"]>>} - The encoded
+ *   system call data
+ */
 export async function encodeSystemCall<
   abi extends Abi | readonly unknown[] = Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi> | undefined = undefined,
@@ -66,7 +78,13 @@ export async function encodeSystemCall<
   ];
 }
 
-/** Encode a system call to be passed as arguments into `World.callFrom` */
+/**
+ * Encode a system call to be passed as arguments into `World.callFrom`
+ *
+ * @param parameters - The parameters for the system call
+ * @returns {Promise<AbiParametersToPrimitiveTypes<ExtractAbiFunction<typeof BaseAbi, "callFrom">["inputs"]>>} - The
+ *   encoded system call data
+ */
 export async function encodeSystemCallFrom<
   abi extends Abi | readonly unknown[] = Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi> | undefined = undefined,

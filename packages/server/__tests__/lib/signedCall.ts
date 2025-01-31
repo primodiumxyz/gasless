@@ -1,3 +1,4 @@
+import TestAgent from "supertest/lib/agent";
 import { Chain, encodeFunctionData, Hex, HttpTransport, PrivateKeyAccount, WalletClient } from "viem";
 import { getTransactionCount } from "viem/actions";
 import { expect } from "vitest";
@@ -6,13 +7,19 @@ import { getSystemId } from "@tests/lib/common";
 import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS } from "@tests/lib/constants";
 import { encodeSystemCall } from "@tests/lib/encode";
 
-import TestAgent = require("supertest/lib/agent");
-
+/**
+ * Move a user to a given coordinate.
+ *
+ * @param user - The wallet client for the user
+ * @param agent - The HTTP agent
+ * @param coord - The coordinate to move to
+ * @returns {Promise<Hex>} - The transaction hash
+ */
 export async function move<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
   coord: { x: number; y: number },
-) {
+): Promise<Hex> {
   const [systemId, callData] = await encodeSystemCall({
     abi: TEST_WORLD_ABI,
     functionName: "move",
@@ -39,12 +46,22 @@ export async function move<T extends WalletClient<HttpTransport, Chain, PrivateK
   return response.body.txHash as Hex;
 }
 
+type SendValueResponse = ReturnType<TestAgent["POST"]>;
+
+/**
+ * Send a transaction containing native tokens to a wallet.
+ *
+ * @param user - The wallet client for the user
+ * @param agent - The HTTP agent
+ * @param amount - The amount to send
+ * @returns {Promise<SendValueResponse>} - The response from the server
+ */
 async function _sendValue<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
   amount: bigint,
   shouldRevert: boolean = false,
-) {
+): Promise<SendValueResponse> {
   const [systemId, callData] = await encodeSystemCall({
     abi: TEST_WORLD_ABI,
     functionName: "deposit",
@@ -74,11 +91,19 @@ async function _sendValue<T extends WalletClient<HttpTransport, Chain, PrivateKe
     .expect(shouldRevert ? 400 : 200);
 }
 
+/**
+ * Send a transaction containing native tokens to a wallet.
+ *
+ * @param user - The wallet client for the user
+ * @param agent - The HTTP agent
+ * @param amount - The amount to send
+ * @returns {Promise<Hex>} - The transaction hash
+ */
 export async function sendValue<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
   amount: bigint,
-) {
+): Promise<Hex> {
   const response = await _sendValue(user, agent, amount);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -87,11 +112,24 @@ export async function sendValue<T extends WalletClient<HttpTransport, Chain, Pri
   return response.body.txHash as Hex;
 }
 
+type SendValueExpectRevertResponse = {
+  error: string;
+  message: string;
+};
+
+/**
+ * Send a transaction containing native tokens to a wallet and expect it to revert.
+ *
+ * @param user - The wallet client for the user
+ * @param agent - The HTTP agent
+ * @param amount - The amount to send
+ * @returns {Promise<SendValueExpectRevertResponse>} - The response from the server
+ */
 export async function sendValueExpectRevert<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
   amount: bigint,
-) {
+): Promise<SendValueExpectRevertResponse> {
   const response = await _sendValue(user, agent, amount, true);
-  return response.body as { error: string; message: string };
+  return response.body as SendValueExpectRevertResponse;
 }

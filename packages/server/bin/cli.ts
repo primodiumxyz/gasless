@@ -2,6 +2,7 @@
 
 import { start } from "@/app";
 
+// Start the server and track the dispose function in SIGINT and SIGTERM
 const { dispose } = await start();
 
 // Handle process close events

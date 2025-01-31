@@ -3,24 +3,30 @@
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import autoLoad from "@fastify/autoload";
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 
 import { DEV, PORT } from "@/utils/constants";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+type BuildReturnType = FastifyInstance;
+type StartReturnType = {
+  fastify: FastifyInstance;
+  dispose: () => Promise<void>;
+};
+
 /**
  * Asynchronously builds the application by registering plugins and routes.
  *
- * This function first registers all plugins located in the "plugins" directory,
- * then proceeds to register all routes located in the "routes" directory.
- * Both registrations are done using the `autoLoad` function provided by the application framework.
+ * This function first registers all plugins located in the "plugins" directory, then proceeds to register all routes
+ * located in the "routes" directory. Both registrations are done using the `autoLoad` function provided by the
+ * application framework.
  *
  * @async
- * @returns {Promise<void>} A promise that resolves when all registrations are complete.
+ * @returns {Promise<BuildReturnType>} A promise that resolves when all registrations are complete.
  */
-export async function build() {
+export async function build(): Promise<BuildReturnType> {
   const app = fastify({
     logger: {
       level: DEV ? "debug" : "warn",
@@ -46,13 +52,13 @@ export async function build() {
 /**
  * Starts the application by building it and listening on port(default 3000).
  *
- * This function first builds the application by calling the `build` function,
- * then listens on port 3000 for incoming requests.
+ * This function first builds the application by calling the `build` function, then listens on port 3000 for incoming
+ * requests.
  *
  * @async
- * @returns {Promise<void>} A promise that resolves when the application is ready to accept requests.
+ * @returns {Promise<StartReturnType>} The fastify instance and a dispose function.
  */
-export async function start() {
+export async function start(): Promise<StartReturnType> {
   const fastify = await build();
 
   fastify.listen({ port: PORT }, (err, address) => {
@@ -71,7 +77,7 @@ export async function start() {
    * @async
    * @returns {Promise<void>} A promise that resolves when the server is closed.
    */
-  async function dispose() {
+  async function dispose(): Promise<void> {
     fastify.log.info("Disposing of the server.");
     await fastify.close();
   }

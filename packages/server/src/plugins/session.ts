@@ -17,6 +17,7 @@ declare module "fastify" {
   }
 }
 
+// Register the session plugin
 export default fp(async function (fastify: FastifyInstance) {
   fastify.register(fastifyCookie).ready((err) => {
     if (err) {

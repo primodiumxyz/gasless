@@ -9,11 +9,22 @@ import { TEST_WORLD_ABI, TEST_WORLD_ADDRESS } from "@tests/lib/constants";
 import { fetchSignatureNonce } from "@tests/lib/fetch";
 import { signCall } from "@tests/lib/sign";
 
+type LoginUserResponse = ReturnType<TestAgent["POST"]>;
+type LogoutUserResponse = ReturnType<TestAgent["DELETE"]>;
+
+/**
+ * Login a user to the server by registering delegation.
+ *
+ * @param user - The wallet client for the user
+ * @param agent - The HTTP agent
+ * @param sessionLength - The length of the session in seconds
+ * @returns {Promise<LoginUserResponse>} - The response from the server
+ */
 export async function loginUser<T extends WalletClient<HttpTransport, Chain, PrivateKeyAccount>>(
   user: T,
   agent: TestAgent,
   sessionLength?: number, //in seconds
-) {
+): Promise<LoginUserResponse> {
   const delegateCallData = encodeFunctionData({
     abi: TEST_WORLD_ABI,
     functionName: "registerDelegation",
@@ -55,7 +66,13 @@ export async function loginUser<T extends WalletClient<HttpTransport, Chain, Pri
   return response;
 }
 
-export async function logoutUser(agent: TestAgent) {
+/**
+ * Logout a user from the server by deleting the session.
+ *
+ * @param agent - The HTTP agent
+ * @returns {Promise<LogoutUserResponse>} - The response from the server
+ */
+export async function logoutUser(agent: TestAgent): Promise<LogoutUserResponse> {
   const response = await agent.delete("/session").expect(200);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

@@ -4,10 +4,14 @@ import { FastifyInstance } from "fastify";
 import { getContract } from "viem";
 
 import { Abi } from "@/utils/abi";
-import { chains } from "@/utils/chain";
 import { CHAIN, SERVER_WALLET } from "@/utils/constants";
 import { RouteCallPostParams } from "@/utils/types";
 
+/**
+ * Registers the `call` route.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ */
 export default async function (fastify: FastifyInstance) {
   fastify.post("/", async function (request, response) {
     if (!request.session.authenticated) return response.unauthorized("Not authenticated");
@@ -32,7 +36,7 @@ export default async function (fastify: FastifyInstance) {
         async () =>
           await worldContract.write.callFrom([from, delegationControlId, callData], {
             account: SERVER_WALLET.account,
-            chain: chains[CHAIN],
+            chain: CHAIN,
             gas: options?.gas ? BigInt(options.gas) : undefined,
           }),
       );
