@@ -1,5 +1,5 @@
 import { Chain } from "viem";
-import _chains from "viem/chains";
+import * as _chains from "viem/chains";
 
 const calderaSepolia: Chain = {
   name: "Caldera Sepolia",

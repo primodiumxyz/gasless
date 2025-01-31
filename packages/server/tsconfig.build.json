@@ -1,5 +1,5 @@
 {
-  "extends": "../../.tsconfigs/bundler/no-dom/library.json",
+  "extends": "../../.tsconfigs/bundler/dom/library-monorepo.json",
   "compilerOptions": {
     "moduleResolution": "Bundler",
     "outDir": "./dist",
