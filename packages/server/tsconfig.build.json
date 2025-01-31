@@ -2,6 +2,7 @@
   "extends": "../../.tsconfigs/bundler/dom/library-monorepo.json",
   "compilerOptions": {
     "moduleResolution": "Bundler",
+    "composite": false,
     "outDir": "./dist",
     "rootDir": ".",
     "baseUrl": ".",

@@ -2,7 +2,7 @@ import { Address, getContract } from "viem";
 
 import { SERVER_WALLET } from "@/utils/constants";
 
-import testConfig from "../../../test-contracts/mud.config.ts";
+import testConfig from "../../../test-contracts/mud.config";
 import testContractsAbi from "../../../test-contracts/out/IWorld.sol/IWorld.abi.json";
 import type testContractsAbiType from "../../../test-contracts/out/IWorld.sol/IWorld.abi.json.d.ts";
 import worlds from "../../../test-contracts/worlds.json";
