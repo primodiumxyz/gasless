@@ -17,7 +17,7 @@
     "dev:node": "pnpm -filter contracts devnode",
     "dev:server": "pnpm -filter @primodiumxyz/gasless-server dev",
     "lint": "pnpm eslint --cache --fix . --ignore-pattern '**/dist/**'",
-    "prepare": "husky && husky install",
+    "prepare": "husky install",
     "sort-package-json": "npx sort-package-json package.json 'packages/*/package.json'",
     "test": "pnpm -r test",
     "test:server": "pnpm -filter @primodiumxyz/gasless-server test",
