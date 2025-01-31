@@ -17,7 +17,7 @@
     "dev:node": "pnpm -filter contracts devnode",
     "dev:server": "pnpm -filter @primodiumxyz/gasless-server dev",
     "lint": "pnpm eslint --cache --fix . --ignore-pattern '**/dist/**'",
-    "prepare": "husky install",
+    "prepare": "dotenvx run -f .env --quiet -- sh -c '[ \"$NODE_ENV\" = production ] || husky install'",
     "sort-package-json": "npx sort-package-json package.json 'packages/*/package.json'",
     "test": "pnpm -r test",
     "test:server": "pnpm -filter @primodiumxyz/gasless-server test",
@@ -30,6 +30,7 @@
     "package.json": "pnpm sort-package-json"
   },
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.14.1",
     "@eslint/js": "^9.6.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
     "@types/eslint__js": "^8.42.3",
