@@ -28,6 +28,8 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # semantic-release seems to be unreliable with these so might as well put both
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         working-directory: packages/server
         run: npx --package semantic-release --package semantic-release-monorepo semantic-release --branches main
