@@ -20,7 +20,9 @@
   },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "Dockerfile",
+    "server.docker-compose.yaml"
   ],
   "scripts": {
     "build": "tsup",

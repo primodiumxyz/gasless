@@ -6,6 +6,8 @@ This monorepo contains the server library and a test contracts package for verif
 
 The server library is available as a [npm package](https://www.npmjs.com/package/@primodiumxyz/gasless-server).
 
+The server is also available as a [Docker image on ghcr](https://github.com/primodiumxyz/gasless-server/pkgs/container/gasless-server) so you can run it straight away in a container.
+
 Read the server [README](/packages/server/README.md) for more information on usage.
 
 - [Introduction](#introduction)
