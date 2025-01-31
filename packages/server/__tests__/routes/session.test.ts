@@ -28,6 +28,7 @@ it("should return authenticated after login", async () => {
 
   // Check the response again for sanity
   const response = await agent.get("/session").expect(200);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   expect(response.body.authenticated).toBe(true);
 });
 
@@ -43,6 +44,7 @@ it("should return unauthenticated after logout", async () => {
 
   // Check the response again for sanity
   const response = await agent.get("/session").expect(200);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   expect(response.body.authenticated).toBe(false);
 });
 
@@ -58,6 +60,7 @@ it("should allow authentication if already authenticated", async () => {
 
   // Check the response again for sanity
   const response = await agent.get("/session").expect(200);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   expect(response.body.authenticated).toBe(true);
 });
 
@@ -72,5 +75,6 @@ it("should expire session after a short timebound delegation", async () => {
   await sleep(1000 * 5);
 
   const response = await agent.get("/session").expect(200);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   expect(response.body.authenticated).toBe(false);
 });
