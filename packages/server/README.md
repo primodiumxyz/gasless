@@ -71,9 +71,9 @@ You can use the [`server.docker-compose.yaml`](./server.docker-compose.yaml) fil
 docker compose up
 ```
 
-This will pull the image from the registry and start the indexer.
+This will pull the image from the registry and start the server.
 
-To stop the indexer, you can use:
+To stop the server, you can use:
 
 ```sh
 docker compose down --remove-orphans
@@ -81,7 +81,69 @@ docker compose down --remove-orphans
 
 ### TypeScript
 
-TODO_TYPESCRIPT
+The tests provide a good overview of how to [register/unregister delegations](./__tests__/routes/session.test.ts) and then [make calls](./__tests__/routes/call.test.ts) with the server, or how to directly [send signed transactions](./__tests__/routes/signedCall.test.ts).
+
+For instance, you can register a delegation with:
+
+```typescript
+// Import from @primodiumxyz/gasless-server/react if you're using React
+import {
+  SERVER_WALLET,
+  TIMEBOUND_DELEGATION,
+  UNLIMITED_DELEGATION,
+  type BadResponse,
+  type RouteResponse,
+} from "@primodiumxyz/gasless-server";
+
+// Create the calldata for registering a delegation
+const delegateCallData = encodeFunctionData({
+  abi: WorldAbi,
+  functionName: "registerDelegation",
+  args: [
+    SERVER_WALLET.account.address, // the paymaster wallet instance created from env.GASLESS_SERVER_PRIVATE_KEY we want to delegate to
+    sessionLength ? TIMEBOUND_DELEGATION : UNLIMITED_DELEGATION, // the type of delegation we want to set
+    sessionLength
+      ? encodeFunctionData({
+          abi: Abi,
+          functionName: "initDelegation",
+          args: [SERVER_WALLET.account.address, BigInt(Math.floor(Date.now() / 1000) + sessionLength)], // delegate for some provided `sessionLength` seconds
+        })
+      : "0x", // if we're setting an unlimited delegation, we don't need to provide any init call data
+  ],
+});
+
+// Sign the call data somehow (see __tests__/lib/sign.ts for an example)
+const signature = await signCall({
+  userClient: user,
+  worldAddress: worldAddress,
+  systemId: getSystemId("Registration"),
+  callData: delegateCallData,
+  nonce: await fetchSignatureNonce(userAddress), // see __tests__/lib/fetch.ts for an example
+});
+
+// Send the request to the server
+const response = await fetch(`${serverUrl}/session`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    address: userAddress,
+    worldAddress: worldAddress,
+    params: [getSystemId("Registration"), delegateCallData, signature],
+  }),
+  credentials: "include",
+});
+
+// Handle the response
+// You can create an agent to automatically map the response to the correct type depending on the request
+// See __tests__/lib/agent.ts for an example
+const data = (await response.json()) as RouteResponse<"/session", "POST"> | BadResponse;
+console.log(data);
+// -> { authenticated: true, txHash: '0x...' }
+```
+
+For more examples, see the [tests](./__tests__) directly; [submitting a call after delegating](./__tests__/lib/calls.ts), [sending a signed transaction with or without native tokens](./__tests__/lib/signedCall.ts).
 
 ## Development
 
@@ -89,6 +151,8 @@ TODO_TYPESCRIPT
 
 ```bash
 pnpm dev:server # from root
+pnpm dev # from packages/server, with watch mode
+pnpm start # from packages/server, with production mode (no watch)
 ```
 
 The server will start on the port specified in the `.env` file.
