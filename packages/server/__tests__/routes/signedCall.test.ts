@@ -35,8 +35,6 @@ it("should be able to send value with a signed transaction", async () => {
   });
   await SERVER_WALLET.waitForTransactionReceipt({ hash: fundHash });
 
-  console.log(await user.getBalance({ address: SERVER_WALLET.account.address }));
-
   // Successfully send value
   const hash = await sendValue(user, agent, minDeposit);
   await user.waitForTransactionReceipt({ hash });

@@ -1,13 +1,6 @@
 import { defineWorld } from "@latticexyz/world";
 
 export default defineWorld({
-  modules: [
-    {
-      name: "Unstable_CallWithSignatureModule",
-      root: true,
-      args: [],
-    },
-  ],
   tables: {
     Counter: {
       schema: {

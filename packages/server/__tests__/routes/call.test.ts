@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { move } from "@tests/lib/calls.ts";
+import { move } from "@tests/lib/calls";
 import { createHttpAgent, createUserWallet, randomCoord } from "@tests/lib/common";
 import { fetchUserPosition } from "@tests/lib/fetch";
 import { loginUser, logoutUser } from "@tests/lib/session";

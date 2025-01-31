@@ -1,5 +1,4 @@
 import { hexToResource } from "@latticexyz/common";
-import { callWithSignatureTypes } from "@latticexyz/world/internal";
 import { Account, Address, Chain, Hex, toHex, Transport, WalletClient } from "viem";
 import { signTypedData } from "viem/actions";
 
@@ -22,7 +21,15 @@ export async function signCall({ userClient, worldAddress, systemId, callData, n
       verifyingContract: worldAddress,
       salt: toHex(CHAIN_ID, { size: 32 }),
     },
-    types: callWithSignatureTypes,
+    types: {
+      Call: [
+        { name: "signer", type: "address" },
+        { name: "systemNamespace", type: "string" },
+        { name: "systemName", type: "string" },
+        { name: "callData", type: "bytes" },
+        { name: "nonce", type: "uint256" },
+      ],
+    },
     primaryType: "Call",
     message: {
       signer: userClient.account.address,

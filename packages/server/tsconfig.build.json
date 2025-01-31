@@ -1,19 +1,15 @@
 {
-  "extends": "../../.tsconfigs/bundler/no-dom/library.json",
+  "extends": "../../.tsconfigs/bundler/dom/library-monorepo.json",
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "declaration": true,
-    "noEmit": false,
     "moduleResolution": "Bundler",
+    "composite": false,
+    "outDir": "./dist",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
+  "include": ["src/**/*.ts", "bin/**/*.ts"],
   "exclude": ["node_modules", "./__tests__", "./dist", "./vite.config.ts"],
-  "include": ["**/**.ts"],
-  "tsc-alias": {
-    "resolveFullPaths": true
-  }
 }

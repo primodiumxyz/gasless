@@ -1,5 +1,5 @@
 import { Chain } from "viem";
-import { foundry } from "viem/chains";
+import * as _chains from "viem/chains";
 
 const calderaSepolia: Chain = {
   name: "Caldera Sepolia",
@@ -23,5 +23,6 @@ const calderaSepolia: Chain = {
 
 export const chains: Record<string, Chain> = {
   calderaSepolia,
-  dev: foundry,
+  dev: _chains.foundry,
+  ..._chains,
 } as const;

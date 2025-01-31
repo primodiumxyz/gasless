@@ -1,10 +1,13 @@
 {
   "name": "@primodiumxyz/gasless-server",
-  "version": "1.0.0",
+  "version": "0.0.0-semantically-released",
   "description": "A library for creating a MUD-compliant gasless server.",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/primodiumxyz/gasless",
+    "directory": "./packages/server"
+  },
   "license": "MIT",
-  "author": "",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
@@ -13,13 +16,16 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "gasless-server": "./dist/cli.js"
+    "local-gasless-server": "./bin/cli.js"
   },
   "files": [
-    "dist"
+    "bin",
+    "dist",
+    "Dockerfile",
+    "server.docker-compose.yaml"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "build": "tsup",
     "dev": "NODE_ENV=development dotenvx run -- tsx watch src/index.ts",
     "start": "NODE_ENV=production tsx src/index.ts",
     "test": "NODE_ENV=test dotenvx run -f .env.test -- vitest --run",
@@ -33,7 +39,8 @@
     "@fastify/rate-limit": "^9.1.0",
     "@fastify/sensible": "^5.0.0",
     "@fastify/session": "^10.9.0",
-    "@latticexyz/world-modules": "^2.0.12",
+    "@latticexyz/world-module-callwithsignature": "^2.2.17",
+    "@latticexyz/world-modules": "^2.2.17",
     "connect-redis": "^7.1.1",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
@@ -44,17 +51,16 @@
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.6.4",
-    "@latticexyz/common": "^2.0.12",
-    "@latticexyz/protocol-parser": "^2.0.12",
-    "@latticexyz/store": "2.0.9",
-    "@latticexyz/world": "2.0.9",
+    "@latticexyz/common": "2.2.17",
+    "@latticexyz/protocol-parser": "2.2.17",
+    "@latticexyz/world": "2.2.17",
     "@types/ioredis-mock": "^8.2.5",
     "@types/node": "^20.14.10",
     "@types/supertest": "^6.0.2",
     "@vitest/ui": "^2.0.1",
     "abitype": "^1.0.5",
     "supertest": "^7.0.0",
-    "tsc-alias": "^1.8.10",
+    "tsup": "^8.3.6",
     "tsx": "^4.16.2",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^2.0.1"

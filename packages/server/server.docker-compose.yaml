@@ -1,0 +1,12 @@
+services:
+  server:
+    image: ghcr.io/primodiumxyz/gasless-server:main
+    restart: always
+    ulimits:
+      nofile: 65535 # Sets open file limit to prevent connection limits
+    environment:
+      # Fill in the following variables
+      - GASLESS_SERVER_PRIVATE_KEY=
+      - GASLESS_SERVER_CHAIN=
+      - GASLESS_SERVER_PORT=
+      - GASLESS_SERVER_SESSION_SECRET=
